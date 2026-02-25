@@ -1,0 +1,74 @@
+name: Assetra CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: assetra_ci
+          POSTGRES_USER: assetra
+          POSTGRES_PASSWORD: assetra
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U assetra -d assetra_ci"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      DJANGO_SECRET_KEY: ci-secret
+      DJANGO_DEBUG: "0"
+      DJANGO_ALLOWED_HOSTS: "*"
+      DB_ENGINE: postgresql
+      DB_NAME: assetra_ci
+      DB_USER: assetra
+      DB_PASSWORD: assetra
+      DB_HOST: 127.0.0.1
+      DB_PORT: 5432
+      CELERY_TASK_ALWAYS_EAGER: "1"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libpq-dev default-libmysqlclient-dev
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Django system checks
+        run: python manage.py check
+
+      - name: Run migrations
+        run: python manage.py migrate --noinput
+
+      - name: Run tests
+        run: python manage.py test
+
+      - name: Generate OpenAPI schema
+        run: python manage.py spectacular --file schema.yaml
+
+      - name: Upload OpenAPI artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: openapi-schema
+          path: schema.yaml

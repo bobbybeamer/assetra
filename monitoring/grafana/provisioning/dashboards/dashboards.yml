@@ -1,0 +1,11 @@
+apiVersion: 1
+
+dashboards:
+  - name: Assetra
+    orgId: 1
+    folder: "Assetra"
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 10
+    options:
+      path: /etc/grafana/provisioning/dashboards

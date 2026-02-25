@@ -1,0 +1,76 @@
+{
+  "uid": "assetra-observability",
+  "title": "Assetra Observability",
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "10s",
+  "panels": [
+    {
+      "type": "stat",
+      "title": "API Requests / sec",
+      "gridPos": {"x": 0, "y": 0, "w": 6, "h": 4},
+      "targets": [
+        {
+          "expr": "sum(rate(assetra_api_requests_total[1m]))",
+          "legendFormat": "rps"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "5xx Error Rate",
+      "gridPos": {"x": 6, "y": 0, "w": 6, "h": 4},
+      "targets": [
+        {
+          "expr": "sum(rate(assetra_api_requests_total{status_code=~\"5..\"}[5m])) / sum(rate(assetra_api_requests_total[5m]))",
+          "legendFormat": "error_rate"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "API Latency (p95)",
+      "gridPos": {"x": 0, "y": 4, "w": 12, "h": 6},
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(assetra_api_request_duration_seconds_bucket[5m])) by (le))",
+          "legendFormat": "p95"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Workflow Executions",
+      "gridPos": {"x": 0, "y": 10, "w": 12, "h": 6},
+      "targets": [
+        {
+          "expr": "sum(rate(assetra_workflow_executions_total[5m])) by (status)",
+          "legendFormat": "{{status}}"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Webhook Deliveries",
+      "gridPos": {"x": 0, "y": 16, "w": 12, "h": 6},
+      "targets": [
+        {
+          "expr": "sum(rate(assetra_webhook_deliveries_total[5m])) by (status)",
+          "legendFormat": "{{status}}"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Dead-lettered Webhooks (10m)",
+      "gridPos": {"x": 0, "y": 22, "w": 6, "h": 4},
+      "targets": [
+        {
+          "expr": "increase(assetra_webhook_dead_letters_total[10m])",
+          "legendFormat": "dead_letters"
+        }
+      ]
+    }
+  ]
+}

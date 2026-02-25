@@ -1,0 +1,51 @@
+from django.contrib import admin
+
+from .models import (
+    Asset,
+    AssetCategory,
+    AssetStateHistory,
+    BarcodeBatch,
+    BarcodeLabel,
+    BarcodeTemplate,
+    DeviceProfile,
+    FeatureFlag,
+    IndustryPreset,
+    IntegrationConnector,
+    InspectionRecord,
+    InventoryCountLine,
+    InventorySession,
+    Location,
+    MaintenanceRecord,
+    NoCodeFormDefinition,
+    ScanEvent,
+    Tenant,
+    TenantMembership,
+    WebhookDelivery,
+    WebhookEndpoint,
+    WorkflowDefinition,
+    WorkflowRun,
+)
+
+admin.site.register(Tenant)
+admin.site.register(TenantMembership)
+admin.site.register(Location)
+admin.site.register(AssetCategory)
+admin.site.register(Asset)
+admin.site.register(AssetStateHistory)
+admin.site.register(ScanEvent)
+admin.site.register(InventorySession)
+admin.site.register(InventoryCountLine)
+admin.site.register(MaintenanceRecord)
+admin.site.register(InspectionRecord)
+admin.site.register(BarcodeTemplate)
+admin.site.register(BarcodeBatch)
+admin.site.register(BarcodeLabel)
+admin.site.register(NoCodeFormDefinition)
+admin.site.register(WorkflowDefinition)
+admin.site.register(WorkflowRun)
+admin.site.register(WebhookEndpoint)
+admin.site.register(WebhookDelivery)
+admin.site.register(IntegrationConnector)
+admin.site.register(DeviceProfile)
+admin.site.register(FeatureFlag)
+admin.site.register(IndustryPreset)
