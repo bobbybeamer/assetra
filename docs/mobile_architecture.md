@@ -101,6 +101,76 @@ override fun onStop() {
 
 > Note: If your app module is not linked yet, keep sessions nullable and inject real implementations from Android app code when integrating into your Activity/Service lifecycle.
 
+#### iOS concrete adapters in this repo
+
+`mobile/ios/ScanProvider.swift` now includes:
+
+- `AVFoundationCameraBackend` (camera path adapter interface)
+- `ExternalScannerBackend` (enterprise scanner callback payload adapter)
+- `parseExternalScannerPayload(...)` helper for normalizing vendor callback payloads
+
+`mobile/ios/AVFoundationCameraSession.swift` provides `AVFoundationCameraSession` which:
+
+- requests camera permission on first start
+- decodes common barcode formats via `AVCaptureMetadataOutput`
+- supports duplicate scan debounce
+- cleans up capture inputs/outputs on `stop()`
+
+`mobile/ios/ExternalScannerSession.swift` provides `NotificationExternalScannerSession` which:
+
+- subscribes to a named `NotificationCenter` event (`AssetraExternalScan` by default)
+- converts callback payloads to `[String: String]`
+- de-registers observer in `stop()` to avoid duplicate callbacks/leaks
+
+iOS wiring pattern:
+
+```swift
+let session = NotificationExternalScannerSession()
+
+let provider = EnterpriseScannerProvider(
+   backends: [
+      ExternalScannerBackend(session: session)
+   ]
+)
+
+provider.start { result in
+   handleScan(result)
+}
+
+// On lifecycle stop:
+provider.stop()
+```
+
+Quick verification without hardware (iOS sample):
+
+1. Start **Enterprise Provider** in `SampleSyncView`.
+2. Tap **Simulate Enterprise Scan**.
+3. Confirm **Last scan** updates and a local scan event is queued.
+4. Tap **Sync Pending Events** to push the captured simulated event.
+
+iOS camera wiring pattern:
+
+```swift
+let cameraSession = AVFoundationCameraSession(
+   previewContainerLayer: previewHost.layer,
+   debounceMs: 1200,
+   onPermissionDenied: { showCameraPermissionAlert() }
+)
+
+let cameraProvider = CameraScanProvider(
+   backends: [
+      AVFoundationCameraBackend(session: cameraSession)
+   ]
+)
+
+cameraProvider.start { result in
+   handleScan(result)
+}
+
+// On lifecycle stop:
+cameraProvider.stop()
+```
+
 ### Full implementation sequence (recommended)
 
 1. Wire camera backend first

@@ -23,6 +23,32 @@ final class SampleTokenProvider: AccessTokenProvider {
 
 enum SampleAppRunner {
     static func runSample(baseURL: URL, tenantId: String, username: String, password: String) async throws {
+        try await runSync(
+            baseURL: baseURL,
+            tenantId: tenantId,
+            username: username,
+            password: password,
+            seedRawValue: "QR-100"
+        )
+    }
+
+    static func runSyncOnly(baseURL: URL, tenantId: String, username: String, password: String) async throws {
+        try await runSync(
+            baseURL: baseURL,
+            tenantId: tenantId,
+            username: username,
+            password: password,
+            seedRawValue: nil
+        )
+    }
+
+    private static func runSync(
+        baseURL: URL,
+        tenantId: String,
+        username: String,
+        password: String,
+        seedRawValue: String?
+    ) async throws {
         let authClient = AuthClient(baseURL: baseURL)
         let tokenStore = InMemoryTokenStore()
 
@@ -33,7 +59,9 @@ enum SampleAppRunner {
         let api = AssetraAPI(baseURL: baseURL, tenantId: tenantId, tokenProvider: tokenProvider)
         let localStore = SampleStoreHolder.sharedStore
 
-        sampleCapture(localStore: localStore, rawValue: "QR-100")
+        if let seedRawValue, !seedRawValue.isEmpty {
+            sampleCapture(localStore: localStore, rawValue: seedRawValue)
+        }
 
         let engine = OfflineSyncEngine(store: localStore, api: api)
         try await engine.sync()

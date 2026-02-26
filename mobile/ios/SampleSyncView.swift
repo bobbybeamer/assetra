@@ -1,6 +1,71 @@
 import SwiftUI
 
+final class SampleScannerController: ObservableObject {
+    @Published var scannerStatus = "Scanner: inactive"
+    @Published var providerStatus = "Provider: none"
+    @Published var lastScanStatus = "Last scan: none"
+
+    private let cameraProvider: ScanProvider
+    private let enterpriseProvider: ScanProvider
+    private var activeProvider: ScanProvider?
+
+    init() {
+        let cameraSession = AVFoundationCameraSession(
+            debounceMs: 1200,
+            onPermissionDenied: { [weak self] in
+                DispatchQueue.main.async {
+                    self?.scannerStatus = "Scanner: camera permission denied"
+                }
+            }
+        )
+        self.cameraProvider = CameraScanProvider(
+            backends: [AVFoundationCameraBackend(session: cameraSession)]
+        )
+
+        let externalSession = NotificationExternalScannerSession()
+        self.enterpriseProvider = EnterpriseScannerProvider(
+            backends: [ExternalScannerBackend(session: externalSession)]
+        )
+    }
+
+    func startCamera(onCapture: @escaping (String) -> Void) {
+        stopActive()
+        activeProvider = cameraProvider
+        providerStatus = "Provider: camera"
+        scannerStatus = "Scanner: camera active"
+
+        cameraProvider.start { [weak self] result in
+            DispatchQueue.main.async {
+                self?.lastScanStatus = "Last scan: \(result.rawValue)"
+            }
+            onCapture(result.rawValue)
+        }
+    }
+
+    func startEnterprise(onCapture: @escaping (String) -> Void) {
+        stopActive()
+        activeProvider = enterpriseProvider
+        providerStatus = "Provider: enterprise"
+        scannerStatus = "Scanner: enterprise active"
+
+        enterpriseProvider.start { [weak self] result in
+            DispatchQueue.main.async {
+                self?.lastScanStatus = "Last scan: \(result.rawValue)"
+            }
+            onCapture(result.rawValue)
+        }
+    }
+
+    func stopActive() {
+        activeProvider?.stop()
+        activeProvider = nil
+        providerStatus = "Provider: none"
+        scannerStatus = "Scanner: inactive"
+    }
+}
+
 struct SampleSyncView: View {
+    @StateObject private var scanner = SampleScannerController()
     @State private var baseUrl = "https://api.assetra.example"
     @State private var tenantId = "1"
     @State private var username = ""
@@ -21,11 +86,52 @@ struct SampleSyncView: View {
             SecureField("Password", text: $password)
                 .textFieldStyle(.roundedBorder)
 
-            Button("Run Sync Sample") {
+            Button("Start Camera Provider") {
+                scanner.startCamera { rawValue in
+                    sampleCapture(localStore: SampleStoreHolder.sharedStore, rawValue: rawValue)
+                    status = "Captured: \(rawValue)"
+                }
+            }
+
+            Button("Start Enterprise Provider") {
+                scanner.startEnterprise { rawValue in
+                    sampleCapture(localStore: SampleStoreHolder.sharedStore, rawValue: rawValue)
+                    status = "Captured: \(rawValue)"
+                }
+            }
+
+            Button("Simulate Enterprise Scan") {
+                NotificationCenter.default.post(
+                    name: NotificationExternalScannerSession.defaultNotificationName,
+                    object: nil,
+                    userInfo: [
+                        "data": "ENT-\(UUID().uuidString.prefix(8))",
+                        "symbology": "code128"
+                    ]
+                )
+            }
+
+            Button("Stop Active Scanner") {
+                scanner.stopActive()
+            }
+
+            Text(scanner.scannerStatus)
+                .font(.footnote)
+                .foregroundColor(.secondary)
+
+            Text(scanner.providerStatus)
+                .font(.footnote)
+                .foregroundColor(.secondary)
+
+            Text(scanner.lastScanStatus)
+                .font(.footnote)
+                .foregroundColor(.secondary)
+
+            Button("Sync Pending Events") {
                 Task {
                     status = "Running..."
                     do {
-                        try await SampleAppRunner.runSample(
+                        try await SampleAppRunner.runSyncOnly(
                             baseURL: URL(string: baseUrl)!,
                             tenantId: tenantId,
                             username: username,
@@ -51,6 +157,9 @@ struct SampleSyncView: View {
             NavigationView {
                 ConflictResolutionView(store: SampleStoreHolder.sharedStore)
             }
+        }
+        .onDisappear {
+            scanner.stopActive()
         }
     }
 }
