@@ -12,7 +12,7 @@ from .tasks import dispatch_webhook
 User = get_user_model()
 
 
-class AssetraAPITestCase(APITestCase):
+class TestAssetraAPI(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(username="operator", password="secret123")
         self.tenant = Tenant.objects.create(name="Demo Tenant", slug="demo-tenant")
@@ -353,7 +353,7 @@ class AssetraAPITestCase(APITestCase):
 # MONITORING & OBSERVABILITY TESTS
 # ============================================================================
 
-class MonitoringTestCase(APITestCase):
+class TestMonitoring(APITestCase):
     """Tests for health checks, metrics, and observability endpoints."""
 
     def test_health_check_endpoint_accessible_without_auth(self):

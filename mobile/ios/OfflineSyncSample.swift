@@ -84,7 +84,22 @@ final class InMemoryLocalStore: LocalStore {
     }
 
     func resolveConflict(conflictId: String, useServerValue: Bool) async {
-        // TODO: if useServerValue is false, re-queue a local update for the asset.
+        if !useServerValue, let conflict = conflicts.first(where: { $0.id == conflictId }) {
+            let replayEvent = LocalScanEvent(
+                clientEventId: UUID().uuidString,
+                symbology: "conflict_replay",
+                rawValue: "asset=\(conflict.assetId);field=\(conflict.field);value=\(conflict.localValue)",
+                sourceType: "conflict_replay",
+                capturedAt: ISO8601DateFormatter().string(from: Date()),
+                synced: false
+            )
+            events.append(replayEvent)
+
+            var current = assets[conflict.assetId] ?? ["id": .string(conflict.assetId)]
+            current[conflict.field] = .string(conflict.localValue)
+            assets[conflict.assetId] = current
+        }
+
         conflicts.removeAll { $0.id == conflictId }
         conflictAcks.append(
             ConflictAcknowledgement(

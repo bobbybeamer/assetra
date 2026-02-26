@@ -96,7 +96,23 @@ class InMemoryLocalStore : LocalStore {
     override suspend fun pendingConflicts(): List<ConflictRecord> = conflicts.toList()
 
     override suspend fun resolveConflict(conflictId: String, useServerValue: Boolean) {
-        // TODO: if useServerValue is false, re-queue a local update for the asset.
+        val conflict = conflicts.firstOrNull { it.id == conflictId }
+        if (!useServerValue && conflict != null) {
+            val replayEvent = LocalScanEvent(
+                clientEventId = UUID.randomUUID().toString(),
+                symbology = "conflict_replay",
+                rawValue = "asset=${conflict.assetId};field=${conflict.field};value=${conflict.localValue}",
+                sourceType = "conflict_replay",
+                capturedAt = Instant.now().toString(),
+                synced = false,
+            )
+            events.add(replayEvent)
+
+            val current = assets[conflict.assetId]?.toMutableMap() ?: mutableMapOf("id" to conflict.assetId)
+            current[conflict.field] = conflict.localValue
+            assets[conflict.assetId] = current
+        }
+
         conflicts.removeAll { it.id == conflictId }
         conflictAcks.add(
             ConflictAcknowledgement(

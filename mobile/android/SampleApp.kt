@@ -28,6 +28,20 @@ class SampleTokenProvider(
 
 object SampleAppRunner {
     fun runSample(baseUrl: String, tenantId: String, username: String, password: String) = runBlocking {
+        runSync(baseUrl, tenantId, username, password, seedRawValue = "QR-100")
+    }
+
+    fun runSyncOnly(baseUrl: String, tenantId: String, username: String, password: String) = runBlocking {
+        runSync(baseUrl, tenantId, username, password, seedRawValue = null)
+    }
+
+    private suspend fun runSync(
+        baseUrl: String,
+        tenantId: String,
+        username: String,
+        password: String,
+        seedRawValue: String?,
+    ) {
         val authClient = AuthClient(baseUrl)
         val tokenStore = InMemoryTokenStore()
 
@@ -44,7 +58,9 @@ object SampleAppRunner {
         )
 
         val localStore = SampleStoreHolder.store
-        sampleCapture(localStore, rawValue = "QR-100")
+        if (!seedRawValue.isNullOrBlank()) {
+            sampleCapture(localStore, rawValue = seedRawValue)
+        }
 
         val engine = OfflineSyncEngine(localStore, api)
         engine.sync()

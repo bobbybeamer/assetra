@@ -33,6 +33,134 @@ Providers included:
 - `RfidScanProvider`
 - `EnterpriseScannerProvider`
 
+### Multi-SDK strategy (per platform)
+
+Both Android and iOS scan providers support multiple SDK backends behind the same `ScanProvider` API.
+
+- Register backends in order of preference (for example: hardware OEM SDK first, camera SDK second).
+- At runtime, provider selects the first backend reporting availability.
+- If primary hardware is unavailable on a device, provider falls back to the next backend automatically.
+- This allows one app build to support mixed hardware fleets without changing sync contracts.
+
+#### Android concrete adapters in this repo
+
+`mobile/android/scan/ScanProviders.kt` now includes:
+
+- `MlKitCameraBackend` (camera barcode path)
+- `DataWedgeEnterpriseBackend` (enterprise scanner intent payload path)
+- `parseDataWedgePayload(...)` helper for DataWedge payload keys
+
+`mobile/android/scan/CameraXBarcodeSession.kt` provides a concrete CameraX + ML Kit session scaffold (`CameraXBarcodeSession`) with:
+- camera permission request
+- preview binding via `PreviewView`
+- barcode analyzer callback wiring
+
+Wiring pattern:
+
+1. Build a `CameraScanSession` that wraps your ML Kit camera pipeline.
+2. Build a `DataWedgeSession` that wraps your broadcast receiver registration.
+3. Inject them into providers as preferred backends (hardware first, fallback second).
+
+Example:
+
+```kotlin
+val dataWedgeSession = DataWedgeBroadcastSession(context = this)
+
+val cameraProvider = CameraScanProvider(
+   backends = listOf(
+      MlKitCameraBackend(
+         session = LambdaCameraSession(
+            onStart = { onDecoded -> startMlKitPipeline(onDecoded) },
+            onStop = { stopMlKitPipeline() }
+         )
+      )
+   )
+)
+
+val enterpriseProvider = EnterpriseScannerProvider(
+   backends = listOf(
+      DataWedgeEnterpriseBackend(session = dataWedgeSession)
+   )
+)
+```
+
+Activity lifecycle pattern:
+
+```kotlin
+override fun onStart() {
+   super.onStart()
+   enterpriseProvider.start { result -> handleScan(result) }
+}
+
+override fun onStop() {
+   enterpriseProvider.stop()
+   cameraProvider.stop()
+   super.onStop()
+}
+```
+
+> Note: If your app module is not linked yet, keep sessions nullable and inject real implementations from Android app code when integrating into your Activity/Service lifecycle.
+
+### Full implementation sequence (recommended)
+
+1. Wire camera backend first
+   - Use `CameraXMlKitSession` with `MlKitCameraBackend` in `CameraScanProvider`.
+   - Verify one successful camera decode creates a pending local scan event.
+
+2. Validate sync path from captured events
+   - Run sync without seeding synthetic events (`SampleAppRunner.runSyncOnly`).
+   - Confirm captured event is accepted by `POST /api/v1/sync/`.
+
+3. Enable enterprise scanner backend
+   - Add `DataWedgeBroadcastSession` to `DataWedgeEnterpriseBackend`.
+   - Confirm DataWedge payload parses into normalized `ScanResult`.
+
+4. Confirm lifecycle safety
+   - Start provider in UI action or `onStart`.
+   - Stop provider in `onStop` to avoid leaked camera/receiver resources.
+
+5. Roll out hardware-specific optimizations
+   - Tune backend order by device profile.
+   - Add OEM-specific adapters behind `ScannerBackend` without changing sync contracts.
+
+### Android dependencies for CameraX + ML Kit
+
+Add these to your Android app module before using `CameraXBarcodeSession`:
+
+```gradle
+implementation "androidx.camera:camera-core:1.3.4"
+implementation "androidx.camera:camera-camera2:1.3.4"
+implementation "androidx.camera:camera-lifecycle:1.3.4"
+implementation "androidx.camera:camera-view:1.3.4"
+implementation "com.google.mlkit:barcode-scanning:17.2.0"
+```
+
+Also include camera permission in AndroidManifest:
+
+```xml
+<uses-permission android:name="android.permission.CAMERA" />
+```
+
+### DataWedge setup and verification (Android)
+
+Use this baseline profile on Zebra/enterprise devices:
+
+1. Create a DataWedge profile and bind it to your app package/activity.
+2. Enable **Intent Output**.
+3. Set **Intent action** to `com.symbol.datawedge.api.RESULT_ACTION`.
+4. Set **Intent category** to `android.intent.category.DEFAULT`.
+5. Ensure scanned data and label type are included in extras.
+
+Expected extras consumed by the sample:
+- `com.symbol.datawedge.data_string` (or `data_string`)
+- `com.symbol.datawedge.label_type` (or `label_type`)
+
+Quick verification in sample UI (`SampleActivity`):
+- Start **Enterprise Provider**.
+- Confirm status shows `Provider: enterprise`.
+- Scan a barcode and confirm **Last scan** updates.
+- Press **Sync Pending Events** and confirm sync success toast.
+
 ## SDK client samples
 
 Reference implementations for the sync client live in:
