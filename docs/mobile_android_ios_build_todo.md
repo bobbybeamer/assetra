@@ -14,6 +14,10 @@ Step 3 implementation guide:
 Step 4 implementation guide:
 - `docs/mobile_step4_release_build_and_go_no_go.md`
 
+Execution accelerators:
+- `docs/mobile_commands_quick_run_sheet.md`
+- `docs/mobile_qa_signoff_report_template.md`
+
 ## Android build to-do
 
 1. Confirm project entry wiring
