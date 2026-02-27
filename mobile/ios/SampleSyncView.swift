@@ -28,7 +28,7 @@ final class SampleScannerController: ObservableObject {
             backends: [ExternalScannerBackend(session: externalSession)]
         )
 
-        let rfidSession = NotificationRfidSession()
+        let rfidSession = makeDefaultRfidSession()
         self.rfidProvider = RfidScanProvider(
             backends: [ZebraRfidBackend(session: rfidSession)]
         )
