@@ -42,14 +42,6 @@ android {
         kotlinCompilerExtensionVersion = "1.5.14"
     }
 
-    sourceSets {
-        getByName("main") {
-            java.srcDirs("../../android")
-            manifest.srcFile("src/main/AndroidManifest.xml")
-            res.srcDirs("src/main/res")
-        }
-    }
-
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -72,18 +64,16 @@ dependencies {
     implementation("androidx.camera:camera-lifecycle:1.3.4")
     implementation("androidx.camera:camera-view:1.3.4")
     implementation("com.google.mlkit:barcode-scanning:17.2.0")
+    implementation("com.google.android.material:material:1.12.0")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
 
-    implementation(name = "API3_ASCII-release-2.0.5.238", ext = "aar")
-    implementation(name = "API3_CMN-release-2.0.5.238", ext = "aar")
-    implementation(name = "API3_INTERFACE-release-2.0.5.238", ext = "aar")
-    implementation(name = "API3_LLRP-release-2.0.5.238", ext = "aar")
-    implementation(name = "API3_NGE-Transportrelease-2.0.5.238", ext = "aar")
-    implementation(name = "API3_NGE-protocolrelease-2.0.5.238", ext = "aar")
-    implementation(name = "API3_NGEUSB-Transportrelease-2.0.5.238", ext = "aar")
-    implementation(name = "API3_READER-release-2.0.5.238", ext = "aar")
-    implementation(name = "API3_TRANSPORT-release-2.0.5.238", ext = "aar")
-    implementation(name = "rfidhostlib", ext = "aar")
-    implementation(name = "rfidseriallib", ext = "aar")
+    implementation(
+        fileTree(
+            mapOf(
+                "dir" to "../../android/vendor/Zebra/RFIDAPI3_SDK_2.0.5.238",
+                "include" to listOf("*.aar")
+            )
+        )
+    )
 }

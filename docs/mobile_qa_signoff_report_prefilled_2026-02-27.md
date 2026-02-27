@@ -10,9 +10,9 @@
 ## Step 1: Entrypoint wiring
 
 ### Android
-- Launcher wired to production home: PENDING (real app manifest not in this workspace)
-- Supporting routes registered: PENDING
-- Notes: Requires edits in real Android app module `app/src/main/AndroidManifest.xml`.
+- Launcher wired to production home: PASS (scaffold app at `mobile/android_app`)
+- Supporting routes registered: PASS (scaffold app at `mobile/android_app`)
+- Notes: Implemented in scaffold project; still needs parity check when moved to final production app repo.
 
 ### iOS
 - App root wired to `ProductionHomeView`: PENDING (real app target file not in this workspace)
@@ -22,10 +22,10 @@
 ## Step 2: Dependencies + debug build
 
 ### Android
-- Dependencies verified: PENDING (in real app module)
-- `assembleDebug` result: PENDING
-- Launch check: PENDING
-- Notes: Run step-2 guide in real Android repo.
+- Dependencies verified: PASS (scaffold app)
+- `assembleDebug` result: PASS (scaffold app)
+- Launch check: PENDING (runtime install test not executed here)
+- Notes: Build succeeded after Java/SDK configuration and Gradle fixes in scaffold app.
 
 ### iOS
 - Framework integration verified: PARTIAL
@@ -68,7 +68,7 @@
 
 | ID | Platform | Severity | Summary | Owner | ETA | Status |
 |----|----------|----------|---------|-------|-----|--------|
-| R-001 | Android+iOS | High | Entrypoint wiring not yet applied in real app targets | TBD | TBD | Open |
+| R-001 | Android+iOS | High | Entrypoint wiring pending in final production app targets (Android scaffold complete, iOS pending) | TBD | TBD | Open |
 | R-002 | Android+iOS | High | Device E2E validation not completed on production hardware | TBD | TBD | Open |
 | R-003 | Android+iOS | Medium | Release artifact validation not yet executed | TBD | TBD | Open |
 
@@ -82,6 +82,7 @@
 ## Final decision
 
 - Android readiness: NO-GO (pending real target wiring/build/tests)
+- Android readiness: NO-GO (scaffold build passes, but real target runtime/release validation pending)
 - iOS readiness: NO-GO (pending real target wiring/build/tests)
 - Combined release decision: NO-GO
 - Approved by: TBD

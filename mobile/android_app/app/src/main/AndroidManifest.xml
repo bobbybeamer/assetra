@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -12,7 +13,8 @@
         android:icon="@android:drawable/sym_def_app_icon"
         android:label="Assetra"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Assetra">
+        android:theme="@style/Theme.Assetra"
+        tools:replace="android:allowBackup,android:label">
 
         <activity
             android:name="com.assetra.sample.ProductionHomeComposeActivity"
