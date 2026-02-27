@@ -2,6 +2,9 @@
 
 Use this checklist in the real mobile app repositories to complete launch wiring and device validation.
 
+Companion step-by-step build runbook:
+- `docs/mobile_android_ios_build_todo.md`
+
 ## 1) Android app-target wiring
 
 ### Launcher activity
