@@ -10,6 +10,7 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
+import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 import java.util.concurrent.ExecutorService
@@ -36,6 +37,23 @@ class CameraXBarcodeSession(
                 onPermissionDenied?.invoke()
             }
         }
+
+    private val scanner = BarcodeScanning.getClient(
+        BarcodeScannerOptions.Builder()
+            .setBarcodeFormats(
+                com.google.mlkit.vision.barcode.Barcode.FORMAT_QR_CODE,
+                com.google.mlkit.vision.barcode.Barcode.FORMAT_CODE_128,
+                com.google.mlkit.vision.barcode.Barcode.FORMAT_CODE_39,
+                com.google.mlkit.vision.barcode.Barcode.FORMAT_EAN_8,
+                com.google.mlkit.vision.barcode.Barcode.FORMAT_EAN_13,
+                com.google.mlkit.vision.barcode.Barcode.FORMAT_UPC_A,
+                com.google.mlkit.vision.barcode.Barcode.FORMAT_UPC_E,
+                com.google.mlkit.vision.barcode.Barcode.FORMAT_PDF417,
+                com.google.mlkit.vision.barcode.Barcode.FORMAT_AZTEC,
+                com.google.mlkit.vision.barcode.Barcode.FORMAT_DATA_MATRIX
+            )
+            .build()
+    )
 
     override fun start(onDecoded: (symbology: String, rawValue: String) -> Unit) {
         callback = onDecoded
@@ -81,7 +99,6 @@ class CameraXBarcodeSession(
                     .build()
 
                 val executor = cameraExecutor ?: Executors.newSingleThreadExecutor().also { cameraExecutor = it }
-                val scanner = BarcodeScanning.getClient()
 
                 analysis.setAnalyzer(executor) { imageProxy ->
                     val mediaImage = imageProxy.image
@@ -96,7 +113,7 @@ class CameraXBarcodeSession(
                             val first = barcodes.firstOrNull { !it.rawValue.isNullOrBlank() }
                             if (first != null) {
                                 val rawValue = first.rawValue.orEmpty()
-                                val symbology = first.format.toString()
+                                val symbology = mapBarcodeFormat(first.format)
                                 if (shouldEmit(rawValue)) {
                                     callback?.invoke(symbology, rawValue)
                                 }
@@ -127,5 +144,21 @@ class CameraXBarcodeSession(
         lastScanRawValue = rawValue
         lastScanAtMs = now
         return true
+    }
+
+    private fun mapBarcodeFormat(format: Int): String {
+        return when (format) {
+            com.google.mlkit.vision.barcode.Barcode.FORMAT_QR_CODE -> "qr_code"
+            com.google.mlkit.vision.barcode.Barcode.FORMAT_CODE_128 -> "code_128"
+            com.google.mlkit.vision.barcode.Barcode.FORMAT_CODE_39 -> "code_39"
+            com.google.mlkit.vision.barcode.Barcode.FORMAT_EAN_8 -> "ean_8"
+            com.google.mlkit.vision.barcode.Barcode.FORMAT_EAN_13 -> "ean_13"
+            com.google.mlkit.vision.barcode.Barcode.FORMAT_UPC_A -> "upc_a"
+            com.google.mlkit.vision.barcode.Barcode.FORMAT_UPC_E -> "upc_e"
+            com.google.mlkit.vision.barcode.Barcode.FORMAT_PDF417 -> "pdf417"
+            com.google.mlkit.vision.barcode.Barcode.FORMAT_AZTEC -> "aztec"
+            com.google.mlkit.vision.barcode.Barcode.FORMAT_DATA_MATRIX -> "data_matrix"
+            else -> "unknown"
+        }
     }
 }
