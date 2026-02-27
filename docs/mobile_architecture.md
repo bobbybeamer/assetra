@@ -107,6 +107,7 @@ override fun onStop() {
 
 - `AVFoundationCameraBackend` (camera path adapter interface)
 - `ExternalScannerBackend` (enterprise scanner callback payload adapter)
+- `ZebraRfidBackend` (RFID adapter that consumes `RfidScanSession`)
 - `parseExternalScannerPayload(...)` helper for normalizing vendor callback payloads
 
 `mobile/ios/AVFoundationCameraSession.swift` provides `AVFoundationCameraSession` which:
@@ -170,6 +171,42 @@ cameraProvider.start { result in
 // On lifecycle stop:
 cameraProvider.stop()
 ```
+
+### iOS Zebra RFID framework integration
+
+`mobile/ios/RfidSession.swift` includes a real Zebra SDK bridge behind `#if canImport(ZebraRfidSdkFramework)` and keeps a notification fallback for non-hardware testing.
+
+SDK package location expected in this workspace:
+
+- `mobile/android/vendor/Zebra/123RFID_iOS_ReleasePackage_1.1.94/SDK_Framework/FrameworkScannerAndRfidSDK/RFIDFramework/ZebraRfidSdkFramework.xcframework`
+
+Xcode integration steps (real app target):
+
+1. In Xcode, open your iOS app target settings.
+2. Add `ZebraRfidSdkFramework.xcframework` to **Frameworks, Libraries, and Embedded Content**.
+3. Set embed mode to **Embed & Sign**.
+4. Ensure the app target links the framework for both device and simulator slices.
+
+Runtime behavior implemented:
+
+- `makeDefaultRfidSession()` returns `HybridRfidSession`.
+- `HybridRfidSession` starts both:
+   - `ZebraSdkRfidSession` (real reader callbacks)
+   - `NotificationRfidSession` (manual simulation path)
+- Zebra path subscribes to SDK events (`reader appearance`, `session established`, `read`, `session termination`), establishes a session to the first available reader, starts inventory, and emits EPC values into `ScanResult`.
+- Notification simulation (`AssetraRfidScan`) remains enabled so **Simulate RFID Scan** in the sample continues to work without hardware.
+
+Sample wiring in this repo:
+
+- `mobile/ios/SampleSyncView.swift` uses `makeDefaultRfidSession()`.
+- `RfidScanProvider` receives `ZebraRfidBackend(session: rfidSession)` and emits source type `rfid`.
+
+Quick iOS RFID verification:
+
+1. Launch sample and tap **Start RFID Provider**.
+2. If Zebra reader is connected, scan a tag and confirm **Last scan** updates with EPC payload.
+3. Without hardware, tap **Simulate RFID Scan** and confirm the same UI/data path updates.
+4. Tap **Sync Pending Events** to verify queued RFID captures are posted to `/api/v1/sync/`.
 
 ### Full implementation sequence (recommended)
 
