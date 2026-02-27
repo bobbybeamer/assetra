@@ -10,6 +10,7 @@ struct ProductionSyncStatusView: View {
     @State private var conflictCount = 0
     @State private var lastSyncAt = "Never"
     @State private var status = "Idle"
+    @State private var showConflicts = false
 
     private let localStore = SampleStoreHolder.sharedStore
 
@@ -51,6 +52,11 @@ struct ProductionSyncStatusView: View {
                 }
             }
 
+            Button("Resolve Conflicts") {
+                showConflicts = true
+            }
+            .disabled(conflictCount == 0)
+
             Text("Pending queue: \(pendingCount)")
                 .font(.footnote)
                 .foregroundColor(.secondary)
@@ -69,6 +75,11 @@ struct ProductionSyncStatusView: View {
         }
         .padding()
         .navigationTitle("Sync Status")
+        .sheet(isPresented: $showConflicts) {
+            NavigationView {
+                ConflictResolutionView(store: SampleStoreHolder.sharedStore)
+            }
+        }
         .task {
             await refreshStatus()
         }

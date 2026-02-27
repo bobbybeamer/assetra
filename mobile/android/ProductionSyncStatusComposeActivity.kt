@@ -1,5 +1,6 @@
 package com.assetra.sample
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -27,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.assetra.conflicts.ConflictResolutionComposeActivity
 import com.assetra.sync.SampleStoreHolder
 import kotlinx.coroutines.launch
 
@@ -153,6 +155,16 @@ fun ProductionSyncStatusScreen(activity: ComponentActivity) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Retry Sync")
+            }
+
+            Button(
+                onClick = {
+                    activity.startActivity(Intent(activity, ConflictResolutionComposeActivity::class.java))
+                },
+                modifier = Modifier.fillMaxWidth(),
+                enabled = conflictCount.value > 0
+            ) {
+                Text("Resolve Conflicts")
             }
 
             Text("Pending queue: ${pendingCount.value}")
