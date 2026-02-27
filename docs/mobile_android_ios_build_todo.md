@@ -11,6 +11,9 @@ Step 2 implementation guide:
 Step 3 implementation guide:
 - `docs/mobile_step3_device_smoke_tests.md`
 
+Step 4 implementation guide:
+- `docs/mobile_step4_release_build_and_go_no_go.md`
+
 ## Android build to-do
 
 1. Confirm project entry wiring
