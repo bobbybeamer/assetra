@@ -5,6 +5,9 @@ Use this in the real mobile app repositories to complete build wiring, compile s
 Step 1 implementation guide:
 - `docs/mobile_step1_entrypoint_execution.md`
 
+Step 2 implementation guide:
+- `docs/mobile_step2_dependencies_and_debug_build.md`
+
 ## Android build to-do
 
 1. Confirm project entry wiring
