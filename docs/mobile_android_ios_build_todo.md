@@ -2,6 +2,9 @@
 
 Use this in the real mobile app repositories to complete build wiring, compile successfully, and validate release readiness.
 
+Step 1 implementation guide:
+- `docs/mobile_step1_entrypoint_execution.md`
+
 ## Android build to-do
 
 1. Confirm project entry wiring
