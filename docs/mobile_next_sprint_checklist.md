@@ -14,15 +14,27 @@
 
 Begin UI implementation on top of the completed scan/sync foundations.
 
-1. Build a minimal production scan screen (Android + iOS)
+1. ✅ Build a minimal production scan screen (Android + iOS)
    - Show scanner state, active provider, and latest scan value.
    - Trigger capture through existing provider start/stop actions.
-2. Build a minimal sync status screen (Android + iOS)
+2. ✅ Build a minimal sync status screen (Android + iOS)
    - Show pending queue count, last sync status, and retry action.
-3. Integrate conflict resolution entry point
+3. ✅ Integrate conflict resolution entry point
    - Route to existing conflict views when pending conflicts exist.
-4. Keep sample modules as reference only
+4. ✅ Keep sample modules as reference only
    - Reuse existing provider/store logic without changing sync contracts.
+
+## Final Readiness Pass (2026-02-27)
+
+Validated in this workspace:
+- ✅ No static diagnostics in `mobile/ios` and `mobile/android`.
+- ✅ No TODO/FIXME/TBD markers in project Swift/Kotlin sources.
+- ✅ Remaining TODO/TBD markers are inside vendor demo SDK code only (`mobile/android/vendor/Zebra/...`).
+
+Remaining blockers before full UI polish in real app targets:
+- ⏳ Wire production entrypoints in actual app modules (Android manifest launcher + iOS app root target).
+- ⏳ Run device E2E checks for camera, enterprise scanner, and RFID hardware paths.
+- ⏳ Validate runtime permissions and background/lifecycle behavior under real navigation stacks.
 
 ## Sprint Goal
 Ship production-ready scan ingestion on both platforms for the camera path, and close the offline conflict requeue gap.
