@@ -18,6 +18,10 @@ Execution accelerators:
 - `docs/mobile_commands_quick_run_sheet.md`
 - `docs/mobile_qa_signoff_report_template.md`
 
+Execution tracking artifacts:
+- `docs/mobile_qa_signoff_report_prefilled_2026-02-27.md`
+- `docs/mobile_first_execution_pass_issue_tracker.md`
+
 ## Android build to-do
 
 1. Confirm project entry wiring
