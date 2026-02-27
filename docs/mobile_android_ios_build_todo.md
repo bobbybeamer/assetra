@@ -8,6 +8,9 @@ Step 1 implementation guide:
 Step 2 implementation guide:
 - `docs/mobile_step2_dependencies_and_debug_build.md`
 
+Step 3 implementation guide:
+- `docs/mobile_step3_device_smoke_tests.md`
+
 ## Android build to-do
 
 1. Confirm project entry wiring
