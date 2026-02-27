@@ -7,6 +7,7 @@ final class SampleScannerController: ObservableObject {
 
     private let cameraProvider: ScanProvider
     private let enterpriseProvider: ScanProvider
+    private let rfidProvider: ScanProvider
     private var activeProvider: ScanProvider?
 
     init() {
@@ -25,6 +26,11 @@ final class SampleScannerController: ObservableObject {
         let externalSession = NotificationExternalScannerSession()
         self.enterpriseProvider = EnterpriseScannerProvider(
             backends: [ExternalScannerBackend(session: externalSession)]
+        )
+
+        let rfidSession = NotificationRfidSession()
+        self.rfidProvider = RfidScanProvider(
+            backends: [ZebraRfidBackend(session: rfidSession)]
         )
     }
 
@@ -49,6 +55,20 @@ final class SampleScannerController: ObservableObject {
         scannerStatus = "Scanner: enterprise active"
 
         enterpriseProvider.start { [weak self] result in
+            DispatchQueue.main.async {
+                self?.lastScanStatus = "Last scan: \(result.rawValue)"
+            }
+            onCapture(result.rawValue)
+        }
+    }
+
+    func startRfid(onCapture: @escaping (String) -> Void) {
+        stopActive()
+        activeProvider = rfidProvider
+        providerStatus = "Provider: rfid"
+        scannerStatus = "Scanner: rfid active"
+
+        rfidProvider.start { [weak self] result in
             DispatchQueue.main.async {
                 self?.lastScanStatus = "Last scan: \(result.rawValue)"
             }
@@ -100,6 +120,13 @@ struct SampleSyncView: View {
                 }
             }
 
+            Button("Start RFID Provider") {
+                scanner.startRfid { rawValue in
+                    sampleCapture(localStore: SampleStoreHolder.sharedStore, rawValue: rawValue)
+                    status = "Captured: \(rawValue)"
+                }
+            }
+
             Button("Simulate Enterprise Scan") {
                 NotificationCenter.default.post(
                     name: NotificationExternalScannerSession.defaultNotificationName,
@@ -107,6 +134,17 @@ struct SampleSyncView: View {
                     userInfo: [
                         "data": "ENT-\(UUID().uuidString.prefix(8))",
                         "symbology": "code128"
+                    ]
+                )
+            }
+
+            Button("Simulate RFID Scan") {
+                NotificationCenter.default.post(
+                    name: NotificationRfidSession.defaultNotificationName,
+                    object: nil,
+                    userInfo: [
+                        "epc": "E200-\(UUID().uuidString.replacingOccurrences(of: "-", with: "").prefix(8))",
+                        "peak_rssi": "-55"
                     ]
                 )
             }

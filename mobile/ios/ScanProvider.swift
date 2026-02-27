@@ -22,6 +22,12 @@ protocol ExternalScannerSession {
     func stop()
 }
 
+protocol RfidScanSession {
+    func isAvailable() -> Bool
+    func start(onTagRead: @escaping (_ epc: String, _ metadata: [String: String]) -> Void)
+    func stop()
+}
+
 protocol ScannerBackend {
     var backendName: String { get }
     func isAvailable() -> Bool
@@ -112,6 +118,43 @@ final class ExternalScannerBackend: ScannerBackend {
     }
 }
 
+final class ZebraRfidBackend: ScannerBackend {
+    let backendName: String = "zebra_rfid"
+    private let session: RfidScanSession?
+
+    init(session: RfidScanSession? = nil) {
+        self.session = session
+    }
+
+    func isAvailable() -> Bool {
+        session?.isAvailable() == true
+    }
+
+    func start(onResult: @escaping (ScanResult) -> Void) {
+        guard let session else { return }
+        session.start { epc, metadata in
+            let rssi = metadata["peak_rssi"]
+            let rawValue: String
+            if let rssi, !rssi.isEmpty {
+                rawValue = "\(epc);rssi=\(rssi)"
+            } else {
+                rawValue = epc
+            }
+            onResult(
+                ScanResult(
+                    symbology: "epc",
+                    rawValue: rawValue,
+                    sourceType: "rfid"
+                )
+            )
+        }
+    }
+
+    func stop() {
+        session?.stop()
+    }
+}
+
 func parseExternalScannerPayload(_ payload: [String: String]) -> ScanResult? {
     let rawValue = payload["data"] ?? payload["raw_value"]
     guard let rawValue, !rawValue.isEmpty else { return nil }
@@ -152,7 +195,10 @@ final class RfidScanProvider: ScanProvider {
     private let backends: [ScannerBackend]
     private var activeBackend: ScannerBackend?
 
-    init(backends: [ScannerBackend] = [NoOpBackend(backendName: "rfid_stub", defaultSource: "rfid")]) {
+    init(backends: [ScannerBackend] = [
+        ZebraRfidBackend(),
+        NoOpBackend(backendName: "rfid_stub", defaultSource: "rfid")
+    ]) {
         self.backends = backends
     }
 

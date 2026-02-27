@@ -23,7 +23,7 @@ struct ConflictResolutionView: View {
                     HStack {
                         Button("Accept Server") {
                             Task {
-                                await store?.resolveConflict(conflictId: conflict.id, useServerValue: true)
+                                await store.resolveConflict(conflictId: conflict.id, useServerValue: true)
                                 conflicts.removeAll { $0.id == conflict.id }
                             }
                         }
@@ -31,7 +31,7 @@ struct ConflictResolutionView: View {
 
                         Button("Keep Local") {
                             Task {
-                                await store?.resolveConflict(conflictId: conflict.id, useServerValue: false)
+                                await store.resolveConflict(conflictId: conflict.id, useServerValue: false)
                                 conflicts.removeAll { $0.id == conflict.id }
                             }
                         }
