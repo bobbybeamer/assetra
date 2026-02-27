@@ -36,6 +36,9 @@ Remaining blockers before full UI polish in real app targets:
 - ⏳ Run device E2E checks for camera, enterprise scanner, and RFID hardware paths.
 - ⏳ Validate runtime permissions and background/lifecycle behavior under real navigation stacks.
 
+Execution guide for these blockers:
+- `docs/mobile_launch_handoff_checklist.md`
+
 ## Sprint Goal
 Ship production-ready scan ingestion on both platforms for the camera path, and close the offline conflict requeue gap.
 
