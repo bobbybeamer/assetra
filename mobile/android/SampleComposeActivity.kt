@@ -108,7 +108,7 @@ fun SampleSyncScreen(activity: ComponentActivity) {
         )
     }
 
-    var activeProvider: ScanProvider? = null
+        val activeProvider = remember { mutableStateOf<ScanProvider?>(null) }
 
     val handleScan: (String) -> Unit = { rawValue ->
         sampleCapture(SampleStoreHolder.store, rawValue)
@@ -120,7 +120,7 @@ fun SampleSyncScreen(activity: ComponentActivity) {
 
     DisposableEffect(Unit) {
         onDispose {
-            activeProvider?.stop()
+                    activeProvider.value?.stop()
         }
     }
 
@@ -187,8 +187,8 @@ fun SampleSyncScreen(activity: ComponentActivity) {
             // Scanner Controls
             Button(
                 onClick = {
-                    activeProvider?.stop()
-                    activeProvider = cameraProvider
+                        activeProvider.value?.stop()
+                        activeProvider.value = cameraProvider
                     isScanning.value = true
                     cameraProvider.start { result -> handleScan(result.rawValue) }
                     scannerStatus.value = "Scanner: camera active"
@@ -202,8 +202,8 @@ fun SampleSyncScreen(activity: ComponentActivity) {
 
             Button(
                 onClick = {
-                    activeProvider?.stop()
-                    activeProvider = enterpriseProvider
+                        activeProvider.value?.stop()
+                        activeProvider.value = enterpriseProvider
                     isScanning.value = false
                     enterpriseProvider.start { result -> handleScan(result.rawValue) }
                     scannerStatus.value = "Scanner: enterprise active"
@@ -237,8 +237,8 @@ fun SampleSyncScreen(activity: ComponentActivity) {
 
             FilledTonalButton(
                 onClick = {
-                    activeProvider?.stop()
-                    activeProvider = null
+                        activeProvider.value?.stop()
+                        activeProvider.value = null
                     isScanning.value = false
                     scannerStatus.value = "Scanner: inactive"
                     providerStatus.value = "Provider: none"
