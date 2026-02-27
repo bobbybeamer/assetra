@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@android:drawable/sym_def_app_icon"
+        android:label="Assetra"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Assetra">
+
+        <activity
+            android:name="com.assetra.sample.ProductionHomeComposeActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.assetra.sample.ProductionScanComposeActivity" />
+        <activity android:name="com.assetra.sample.ProductionSyncStatusComposeActivity" />
+        <activity android:name="com.assetra.conflicts.ConflictResolutionComposeActivity" />
+    </application>
+
+</manifest>
