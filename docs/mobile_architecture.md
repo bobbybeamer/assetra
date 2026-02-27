@@ -369,6 +369,10 @@ UI hook samples:
 - Android Activity: `mobile/android/SampleActivity.kt`
 - iOS SwiftUI view: `mobile/ios/SampleSyncView.swift`
 
+Production UI entrypoints:
+- Android Activity: `mobile/android/ProductionHomeComposeActivity.kt`
+- iOS SwiftUI root: `mobile/ios/ProductionHomeView.swift`
+
 Conflict resolution UI samples:
 - Android Activity: `mobile/android/ConflictResolutionActivity.kt`
 - iOS SwiftUI view: `mobile/ios/ConflictResolutionView.swift`
@@ -387,6 +391,23 @@ Launch it from an existing activity:
 startActivity(Intent(this, SampleActivity::class.java))
 ```
 
+### How to wire production entrypoint (Android)
+
+In your real Android app module manifest, set the production home as launcher:
+
+```xml
+<activity
+   android:name="com.assetra.sample.ProductionHomeComposeActivity"
+   android:exported="true">
+   <intent-filter>
+      <action android:name="android.intent.action.MAIN" />
+      <category android:name="android.intent.category.LAUNCHER" />
+   </intent-filter>
+</activity>
+```
+
+If you keep sample activities for testing, register them without launcher intent filters.
+
 ### How to run (iOS)
 
 Use the SwiftUI view as a root view:
@@ -401,6 +422,25 @@ struct AssetraSampleApp: App {
    }
 }
 ```
+
+### How to wire production entrypoint (iOS)
+
+Use the production home as the app root view in your real target:
+
+```swift
+@main
+struct AssetraApp: App {
+   var body: some Scene {
+      WindowGroup {
+         ProductionHomeView()
+      }
+   }
+}
+```
+
+This hosts both production flows in one shell:
+- `Scan` tab -> `ProductionScanView`
+- `Sync` tab -> `ProductionSyncStatusView`
 
 ## End-to-end demo flow (Auth -> Capture -> Sync)
 
