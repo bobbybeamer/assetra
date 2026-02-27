@@ -1,5 +1,29 @@
 # Mobile Next Sprint Checklist
 
+## Current Status (2026-02-27)
+
+- ✅ Android camera provider integration completed.
+- ✅ iOS camera provider integration completed.
+- ✅ Conflict keep-local requeue path completed on both platforms.
+- ✅ Android enterprise scanner provider completed.
+- ✅ iOS enterprise scanner provider completed.
+- ✅ Android RFID provider integration completed (Zebra API3 path + fallback).
+- ✅ iOS RFID provider integration completed (Zebra SDK bridge + fallback simulation).
+
+## Next Action
+
+Begin UI implementation on top of the completed scan/sync foundations.
+
+1. Build a minimal production scan screen (Android + iOS)
+   - Show scanner state, active provider, and latest scan value.
+   - Trigger capture through existing provider start/stop actions.
+2. Build a minimal sync status screen (Android + iOS)
+   - Show pending queue count, last sync status, and retry action.
+3. Integrate conflict resolution entry point
+   - Route to existing conflict views when pending conflicts exist.
+4. Keep sample modules as reference only
+   - Reuse existing provider/store logic without changing sync contracts.
+
 ## Sprint Goal
 Ship production-ready scan ingestion on both platforms for the camera path, and close the offline conflict requeue gap.
 
