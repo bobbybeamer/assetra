@@ -43,7 +43,10 @@ import com.assetra.scan.DataWedgeBroadcastSession
 import com.assetra.scan.DataWedgeEnterpriseBackend
 import com.assetra.scan.EnterpriseScannerProvider
 import com.assetra.scan.MlKitCameraBackend
+import com.assetra.scan.RfidScanProvider
 import com.assetra.scan.ScanProvider
+import com.assetra.scan.ZebraRfidBackend
+import com.assetra.scan.ZebraRfidSession
 import com.assetra.sync.SampleAppRunner
 import com.assetra.sync.SampleStoreHolder
 import com.assetra.sync.sampleCapture
@@ -104,6 +107,14 @@ fun SampleSyncScreen(activity: ComponentActivity) {
                 DataWedgeEnterpriseBackend(
                     session = DataWedgeBroadcastSession(activity, action = "com.symbol.datawedge.api.RESULT_ACTION")
                 )
+            )
+        )
+    }
+
+    val rfidProvider = remember {
+        RfidScanProvider(
+            backends = listOf(
+                ZebraRfidBackend(session = ZebraRfidSession(activity))
             )
         )
     }
@@ -213,6 +224,21 @@ fun SampleSyncScreen(activity: ComponentActivity) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Start Enterprise Provider")
+            }
+
+            Button(
+                onClick = {
+                        activeProvider.value?.stop()
+                        activeProvider.value = rfidProvider
+                    isScanning.value = false
+                    rfidProvider.start { result -> handleScan(result.rawValue) }
+                    scannerStatus.value = "Scanner: rfid active"
+                    providerStatus.value = "Provider: rfid"
+                    Toast.makeText(activity, "RFID provider started", Toast.LENGTH_SHORT).show()
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Start RFID Provider")
             }
 
             Button(

@@ -1,0 +1,28 @@
+repositories {
+    flatDir {
+        dirs "$rootDir/mobile/android/vendor/Zebra/RFIDAPI3_SDK_2.0.5.238"
+    }
+}
+
+dependencies {
+    implementation(name: "API3_ASCII-release-2.0.5.238", ext: "aar")
+    implementation(name: "API3_CMN-release-2.0.5.238", ext: "aar")
+    implementation(name: "API3_INTERFACE-release-2.0.5.238", ext: "aar")
+    implementation(name: "API3_LLRP-release-2.0.5.238", ext: "aar")
+    implementation(name: "API3_NGE-Transportrelease-2.0.5.238", ext: "aar")
+    implementation(name: "API3_NGE-protocolrelease-2.0.5.238", ext: "aar")
+    implementation(name: "API3_NGEUSB-Transportrelease-2.0.5.238", ext: "aar")
+    implementation(name: "API3_READER-release-2.0.5.238", ext: "aar")
+    implementation(name: "API3_TRANSPORT-release-2.0.5.238", ext: "aar")
+    implementation(name: "rfidhostlib", ext: "aar")
+    implementation(name: "rfidseriallib", ext: "aar")
+}
+
+/*
+Required manifest permissions in your Android app module:
+
+<uses-permission android:name="android.permission.BLUETOOTH" />
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+<uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+*/

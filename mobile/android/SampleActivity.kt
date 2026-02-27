@@ -18,7 +18,10 @@ import com.assetra.scan.DataWedgeBroadcastSession
 import com.assetra.scan.DataWedgeEnterpriseBackend
 import com.assetra.scan.EnterpriseScannerProvider
 import com.assetra.scan.MlKitCameraBackend
+import com.assetra.scan.RfidScanProvider
 import com.assetra.scan.ScanProvider
+import com.assetra.scan.ZebraRfidBackend
+import com.assetra.scan.ZebraRfidSession
 import com.assetra.sync.SampleStoreHolder
 import com.assetra.sync.sampleCapture
 
@@ -26,6 +29,7 @@ class SampleActivity : ComponentActivity() {
     private val dataWedgeAction = "com.symbol.datawedge.api.RESULT_ACTION"
     private lateinit var cameraProvider: ScanProvider
     private lateinit var enterpriseProvider: ScanProvider
+    private lateinit var rfidProvider: ScanProvider
     private var activeProvider: ScanProvider? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +57,11 @@ class SampleActivity : ComponentActivity() {
                 DataWedgeEnterpriseBackend(session = DataWedgeBroadcastSession(this, action = dataWedgeAction))
             )
         )
+        rfidProvider = RfidScanProvider(
+            backends = listOf(
+                ZebraRfidBackend(session = ZebraRfidSession(this))
+            )
+        )
 
         val baseUrlInput = EditText(this).apply { hint = "Base URL" }
         val tenantInput = EditText(this).apply { hint = "Tenant ID" }
@@ -60,6 +69,7 @@ class SampleActivity : ComponentActivity() {
         val passwordInput = EditText(this).apply { hint = "Password" }
         val startCameraButton = Button(this).apply { text = "Start Camera Provider" }
         val startEnterpriseButton = Button(this).apply { text = "Start Enterprise Provider" }
+        val startRfidButton = Button(this).apply { text = "Start RFID Provider" }
         val stopScannerButton = Button(this).apply { text = "Stop Active Scanner" }
         val scannerStatus = TextView(this).apply {
             text = "Scanner: inactive"
@@ -80,6 +90,7 @@ class SampleActivity : ComponentActivity() {
             addView(previewView)
             addView(startCameraButton)
             addView(startEnterpriseButton)
+            addView(startRfidButton)
             addView(stopScannerButton)
             addView(scannerStatus)
             addView(providerStatus)
@@ -116,6 +127,16 @@ class SampleActivity : ComponentActivity() {
             scannerStatus.setTextColor(Color.parseColor("#2E7D32"))
             providerStatus.text = "Provider: enterprise"
             Toast.makeText(this, "Enterprise provider started", Toast.LENGTH_SHORT).show()
+        }
+
+        startRfidButton.setOnClickListener {
+            activeProvider?.stop()
+            activeProvider = rfidProvider
+            rfidProvider.start { result -> handleScan(result.rawValue) }
+            scannerStatus.text = "Scanner: rfid active"
+            scannerStatus.setTextColor(Color.parseColor("#2E7D32"))
+            providerStatus.text = "Provider: rfid"
+            Toast.makeText(this, "RFID provider started", Toast.LENGTH_SHORT).show()
         }
 
         stopScannerButton.setOnClickListener {

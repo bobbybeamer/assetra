@@ -211,6 +211,45 @@ Also include camera permission in AndroidManifest:
 <uses-permission android:name="android.permission.CAMERA" />
 ```
 
+### Android dependencies for Zebra RFID API3
+
+When integrating `ZebraRfidSession` in your Android app module, include the Zebra AARs from the checked-in SDK folder.
+
+Example (`app/build.gradle`):
+
+```gradle
+repositories {
+   flatDir {
+      dirs "$rootDir/mobile/android/vendor/Zebra/RFIDAPI3_SDK_2.0.5.238"
+   }
+}
+
+dependencies {
+   implementation(name: "API3_ASCII-release-2.0.5.238", ext: "aar")
+   implementation(name: "API3_CMN-release-2.0.5.238", ext: "aar")
+   implementation(name: "API3_INTERFACE-release-2.0.5.238", ext: "aar")
+   implementation(name: "API3_LLRP-release-2.0.5.238", ext: "aar")
+   implementation(name: "API3_NGE-Transportrelease-2.0.5.238", ext: "aar")
+   implementation(name: "API3_NGE-protocolrelease-2.0.5.238", ext: "aar")
+   implementation(name: "API3_NGEUSB-Transportrelease-2.0.5.238", ext: "aar")
+   implementation(name: "API3_READER-release-2.0.5.238", ext: "aar")
+   implementation(name: "API3_TRANSPORT-release-2.0.5.238", ext: "aar")
+   implementation(name: "rfidhostlib", ext: "aar")
+   implementation(name: "rfidseriallib", ext: "aar")
+}
+```
+
+Required Android permissions (minimum):
+
+```xml
+<uses-permission android:name="android.permission.BLUETOOTH" />
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+<uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+```
+
+> Note: This repository contains mobile reference sources only and does not include the app module `build.gradle`; apply the snippet in your real Android app project.
+
 ### DataWedge setup and verification (Android)
 
 Use this baseline profile on Zebra/enterprise devices:
