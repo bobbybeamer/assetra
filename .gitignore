@@ -4,4 +4,17 @@
 .venv/
 .env
 
+# Python cache/artifacts
+__pycache__/
+**/__pycache__/
+*.py[cod]
+
+# Local runtime/state
+db.sqlite3
+
+# Editor/IDE local settings
+.vscode/
+.idea/
+**/.idea/
+
 mobile/android/vendor/
