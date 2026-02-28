@@ -37,20 +37,20 @@
 ## Step 3: Device smoke tests
 
 ### Android smoke summary
-- Camera path: PENDING
+- Camera path: PENDING (no connected Android runtime target)
 - Enterprise scanner path: PENDING
 - RFID path: PENDING
 - Sync + conflicts: PENDING
 - Permission/lifecycle: PENDING
-- Notes: Requires physical hardware test pass.
+- Notes: `adb` installed, but `adb devices` currently empty in this environment.
 
 ### iOS smoke summary
-- Camera path: PENDING
+- Camera path: PARTIAL (simulator app launch baseline PASS)
 - Enterprise scanner path: PENDING
 - RFID path: PENDING
 - Sync + conflicts: PENDING
 - Permission/lifecycle: PENDING
-- Notes: Requires physical hardware test pass.
+- Notes: Debug build succeeded, simulator booted, app installed and launched via `simctl`; hardware-specific paths still pending.
 
 ## Step 4: Release build + go/no-go
 

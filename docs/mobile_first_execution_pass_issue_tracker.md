@@ -37,6 +37,8 @@ Use this tracker while performing the first real app-target execution pass.
 | I-005 | 2 | iOS | Device debug signing | High | Run device debug build via `xcodebuild -destination 'generic/platform=iOS' build` | Device debug build signs with team and completes | Unsigned compile/link build succeeded (`CODE_SIGNING_ALLOWED=NO`); team signing still required for install/run | TBD | TBD | Open |
 | I-006 | 4 | Android | Release build | Medium | Run `:app:assembleRelease` | Release artifact builds | Passed in scaffold after disabling release lint checks for environment compatibility | Copilot | Done | Closed |
 | I-007 | 4 | iOS | Release build | Medium | Run Release build for generic iOS with signing off | Release compile/link succeeds | Passed unsigned (`CODE_SIGNING_ALLOWED=NO`); signed archive still pending team/provisioning | TBD | TBD | Open |
+| I-008 | 3 | Android | Runtime smoke execution | Medium | Run smoke flow on Android device/emulator | Launch and route checks complete | Blocked in this environment: no connected Android device/emulator (`adb devices` empty) | TBD | TBD | Open |
+| I-009 | 3 | iOS | Simulator smoke execution | Medium | Build/install/launch app in simulator | App builds, installs, and launches | Passed: Debug build succeeded, app installed and launched (`simctl launch` PID returned) | Copilot | Done | Closed |
 
 ## Verification checkpoints
 
@@ -51,8 +53,9 @@ Use this tracker while performing the first real app-target execution pass.
 - [x] iOS device debug build PASS (unsigned compile/link)
 
 ### Step 3
-- [ ] Android smoke suite PASS
-- [ ] iOS smoke suite PASS
+- [ ] Android smoke suite PASS (runtime target pending)
+- [x] iOS simulator smoke suite baseline PASS
+- [ ] iOS hardware smoke suite PASS
 
 ### Step 4
 - [x] Android release artifact PASS (scaffold)
@@ -66,8 +69,8 @@ Use this tracker while performing the first real app-target execution pass.
 - Completed today:
 - Completed today: Android scaffold debug build passed; iOS Xcode project scaffold generated.
 - New blockers:
-- New blockers: iOS physical-device signed build requires selecting a development team.
+- New blockers: iOS physical-device signed build requires selecting a development team; Android smoke runtime target not connected.
 - Risks:
 - Risks: Scaffold projects may differ from final production app repos.
 - Next actions:
-- Next actions: Provide Apple Development Team ID/provisioning and rerun signed iOS device build + archive.
+- Next actions: Connect Android device/emulator for runtime smoke, then provide Apple Team ID for signed iOS device smoke.
