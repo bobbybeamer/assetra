@@ -3,7 +3,7 @@
 ## Release Candidate
 
 - Version / build: Reference workspace state @ commit `20c647d` and later doc updates
-- Date: 2026-02-27
+- Date: 2026-02-28
 - QA owner: TBD
 - Platforms in scope: Android / iOS
 
@@ -24,8 +24,8 @@
 ### Android
 - Dependencies verified: PASS (scaffold app)
 - `assembleDebug` result: PASS (scaffold app)
-- Launch check: PENDING (runtime install test not executed here)
-- Notes: Build succeeded after Java/SDK configuration and Gradle fixes in scaffold app.
+- Launch check: PASS (emulator baseline)
+- Notes: Build succeeded after Java/SDK configuration and Gradle fixes in scaffold app; app installed and launched on `emulator-5554`.
 
 ### iOS
 - Framework integration verified: PARTIAL
@@ -37,12 +37,12 @@
 ## Step 3: Device smoke tests
 
 ### Android smoke summary
-- Camera path: PENDING (no connected Android runtime target)
+- Camera path: PARTIAL (app launch baseline PASS on emulator; in-app camera flow still pending)
 - Enterprise scanner path: PENDING
 - RFID path: PENDING
 - Sync + conflicts: PENDING
-- Permission/lifecycle: PENDING
-- Notes: `adb` installed, but `adb devices` currently empty in this environment.
+- Permission/lifecycle: PARTIAL (app foreground launch confirmed)
+- Notes: `adb devices` now reports `emulator-5554`; remaining smoke checks require manual in-app route execution.
 
 ### iOS smoke summary
 - Camera path: PARTIAL (simulator app launch baseline PASS)
@@ -55,9 +55,9 @@
 ## Step 4: Release build + go/no-go
 
 ### Android
-- `assembleRelease`/`bundleRelease`: PENDING
+- `assembleRelease`/`bundleRelease`: PASS (`assembleRelease`)
 - Release artifact install/run: PENDING
-- Notes: Execute in real app build pipeline.
+- Notes: Release compile completed in scaffold app; still need final app pipeline validation.
 
 ### iOS
 - Release archive: PENDING
