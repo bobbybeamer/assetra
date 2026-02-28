@@ -37,12 +37,12 @@
 ## Step 3: Device smoke tests
 
 ### Android smoke summary
-- Camera path: PARTIAL (app launch baseline PASS on emulator; in-app camera flow still pending)
+- Camera path: PARTIAL (launch baseline PASS previously; current pass blocked by emulator instability)
 - Enterprise scanner path: PENDING
 - RFID path: PENDING
 - Sync + conflicts: PENDING
 - Permission/lifecycle: PARTIAL (app foreground launch confirmed)
-- Notes: `adb devices` now reports `emulator-5554`; remaining smoke checks require manual in-app route execution.
+- Notes: Remaining smoke checks are blocked in current run because `emulator-5554` repeatedly transitions to `offline`, and clean AVD relaunch fails with insufficient host disk space.
 
 ### iOS smoke summary
 - Camera path: PARTIAL (simulator app launch baseline PASS)

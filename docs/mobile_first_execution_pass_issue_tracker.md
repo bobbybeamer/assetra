@@ -37,7 +37,7 @@ Use this tracker while performing the first real app-target execution pass.
 | I-005 | 2 | iOS | Device debug signing | High | Run device debug build via `xcodebuild -destination 'generic/platform=iOS' build` | Device debug build signs with team and completes | Unsigned compile/link build succeeded (`CODE_SIGNING_ALLOWED=NO`); team signing still required for install/run | TBD | TBD | Open |
 | I-006 | 4 | Android | Release build | Medium | Run `:app:assembleRelease` | Release artifact builds | Passed in scaffold after disabling release lint checks for environment compatibility | Copilot | Done | Closed |
 | I-007 | 4 | iOS | Release build | Medium | Run Release build for generic iOS with signing off | Release compile/link succeeds | Passed unsigned (`CODE_SIGNING_ALLOWED=NO`); signed archive still pending team/provisioning | TBD | TBD | Open |
-| I-008 | 3 | Android | Runtime smoke execution | Medium | Run smoke flow on Android device/emulator | Launch and route checks complete | Baseline launch now passes on emulator (`emulator-5554`): app installed and `ProductionHomeComposeActivity` is top resumed; full route/scanner flow still pending | Copilot | In progress | Open |
+| I-008 | 3 | Android | Runtime smoke execution | High | Run smoke flow on Android device/emulator | Launch and route checks complete | Baseline launch previously passed, but current execution is blocked: emulator repeatedly enters `offline` state and clean relaunch fails (`AVD ... does not have enough disk space`) | Copilot | TBD | Open |
 | I-009 | 3 | iOS | Simulator smoke execution | Medium | Build/install/launch app in simulator | App builds, installs, and launches | Passed: Debug build succeeded, app installed and launched (`simctl launch` PID returned) | Copilot | Done | Closed |
 
 ## Verification checkpoints
@@ -69,8 +69,8 @@ Use this tracker while performing the first real app-target execution pass.
 - Completed today:
 - Completed today: Android scaffold debug build passed; iOS Xcode project scaffold generated.
 - New blockers:
-- New blockers: iOS physical-device signed build requires selecting a development team.
+- New blockers: iOS physical-device signed build requires selecting a development team; Android emulator is unstable (`offline`) and cannot be cleanly restarted due host disk-space limits.
 - Risks:
-- Risks: Scaffold projects may differ from final production app repos.
+- Risks: Scaffold projects may differ from final production app repos; Android smoke automation cannot proceed until emulator stability/disk constraints are resolved.
 - Next actions:
 - Next actions: Execute Android route/scanner smoke flow on the connected emulator, then provide Apple Team ID for signed iOS device smoke.
