@@ -30,9 +30,9 @@
 ### iOS
 - Framework integration verified: PARTIAL
 - Simulator debug build: PASS (scaffold project)
-- Device debug build: PENDING
+- Device debug build: PARTIAL (unsigned build PASS; signed build pending)
 - Launch check: PENDING
-- Notes: Full Xcode selected, iOS platform downloaded, simulator provisioned, and `xcodebuild` Debug simulator build succeeded.
+- Notes: Signed device build currently blocked by missing Development Team; unsigned device compile/link build succeeded using `CODE_SIGNING_ALLOWED=NO`.
 
 ## Step 3: Device smoke tests
 

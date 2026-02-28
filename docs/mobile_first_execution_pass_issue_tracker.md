@@ -34,6 +34,7 @@ Use this tracker while performing the first real app-target execution pass.
 | I-002 | 1 | iOS | App root wiring | High | Set app root to `ProductionHomeView` and run | App opens production tabs | Implemented in scaffold source (`mobile/ios/AssetraApp.swift`) and generated Xcode project | Copilot | Done | Closed |
 | I-003 | 2 | Android | Debug build setup | High | Run `:app:assembleDebug` | Debug artifact builds successfully | Fixed toolchain + manifest + dependency issues; build now successful in scaffold | Copilot | Done | Closed |
 | I-004 | 2 | iOS | Debug build setup | High | Run simulator build via `xcodebuild` | Debug simulator build completes | Fixed by selecting full Xcode + downloading iOS platform + creating simulator; build succeeded | Copilot | Done | Closed |
+| I-005 | 2 | iOS | Device debug signing | High | Run device debug build via `xcodebuild -destination 'generic/platform=iOS' build` | Device debug build signs with team and completes | Unsigned compile/link build succeeded (`CODE_SIGNING_ALLOWED=NO`); team signing still required for install/run | TBD | TBD | Open |
 
 ## Verification checkpoints
 
@@ -44,7 +45,8 @@ Use this tracker while performing the first real app-target execution pass.
 ### Step 2
 - [x] Android debug build PASS (scaffold project)
 - [x] iOS simulator debug build PASS (scaffold project)
-- [ ] iOS device debug build PASS
+- [ ] iOS device debug build PASS (signed)
+- [x] iOS device debug build PASS (unsigned compile/link)
 
 ### Step 3
 - [ ] Android smoke suite PASS
@@ -61,8 +63,8 @@ Use this tracker while performing the first real app-target execution pass.
 - Completed today:
 - Completed today: Android scaffold debug build passed; iOS Xcode project scaffold generated.
 - New blockers:
-- New blockers: iOS physical-device build not yet executed.
+- New blockers: iOS physical-device signed build requires selecting a development team.
 - Risks:
 - Risks: Scaffold projects may differ from final production app repos.
 - Next actions:
-- Next actions: Run iOS device debug build and proceed to step-3 smoke tests.
+- Next actions: Set iOS Development Team in Signing & Capabilities and rerun signed device debug build.
