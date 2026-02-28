@@ -33,7 +33,7 @@ Use this tracker while performing the first real app-target execution pass.
 | I-001 | 1 | Android | Entrypoint wiring | High | Apply launcher update in manifest and run app | App launches into production home | Implemented in scaffold manifest (`ProductionHomeComposeActivity` launcher) | Copilot | Done | Closed |
 | I-002 | 1 | iOS | App root wiring | High | Set app root to `ProductionHomeView` and run | App opens production tabs | Implemented in scaffold source (`mobile/ios/AssetraApp.swift`) and generated Xcode project | Copilot | Done | Closed |
 | I-003 | 2 | Android | Debug build setup | High | Run `:app:assembleDebug` | Debug artifact builds successfully | Fixed toolchain + manifest + dependency issues; build now successful in scaffold | Copilot | Done | Closed |
-| I-004 | 2 | iOS | Debug build setup | High | Run simulator build via `xcodebuild` | Debug simulator build completes | Blocked: active developer directory points to CommandLineTools; full Xcode not selected | TBD | TBD | Open |
+| I-004 | 2 | iOS | Debug build setup | High | Run simulator build via `xcodebuild` | Debug simulator build completes | Fixed by selecting full Xcode + downloading iOS platform + creating simulator; build succeeded | Copilot | Done | Closed |
 
 ## Verification checkpoints
 
@@ -43,7 +43,8 @@ Use this tracker while performing the first real app-target execution pass.
 
 ### Step 2
 - [x] Android debug build PASS (scaffold project)
-- [ ] iOS simulator/device debug build PASS
+- [x] iOS simulator debug build PASS (scaffold project)
+- [ ] iOS device debug build PASS
 
 ### Step 3
 - [ ] Android smoke suite PASS
@@ -60,8 +61,8 @@ Use this tracker while performing the first real app-target execution pass.
 - Completed today:
 - Completed today: Android scaffold debug build passed; iOS Xcode project scaffold generated.
 - New blockers:
-- New blockers: iOS `xcodebuild` blocked until full Xcode is selected (`xcode-select` currently points to CommandLineTools).
+- New blockers: iOS physical-device build not yet executed.
 - Risks:
 - Risks: Scaffold projects may differ from final production app repos.
 - Next actions:
-- Next actions: Switch active developer directory to full Xcode and rerun iOS simulator/device debug builds.
+- Next actions: Run iOS device debug build and proceed to step-3 smoke tests.

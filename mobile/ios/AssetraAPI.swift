@@ -46,7 +46,7 @@ struct AssetraAPI: SyncAPI {
         }
 
         let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertToSnakeCase
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
         return try decoder.decode(SyncResponse.self, from: response.data)
     }
 }

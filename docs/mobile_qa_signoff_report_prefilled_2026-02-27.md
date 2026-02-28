@@ -29,10 +29,10 @@
 
 ### iOS
 - Framework integration verified: PARTIAL
-- Simulator debug build: FAIL (environment blocker)
+- Simulator debug build: PASS (scaffold project)
 - Device debug build: PENDING
 - Launch check: PENDING
-- Notes: `xcodebuild` blocked because active developer directory is `/Library/Developer/CommandLineTools`; switch to full Xcode with `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`.
+- Notes: Full Xcode selected, iOS platform downloaded, simulator provisioned, and `xcodebuild` Debug simulator build succeeded.
 
 ## Step 3: Device smoke tests
 

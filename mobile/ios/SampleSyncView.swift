@@ -13,11 +13,7 @@ final class SampleScannerController: ObservableObject {
     init() {
         let cameraSession = AVFoundationCameraSession(
             debounceMs: 1200,
-            onPermissionDenied: { [weak self] in
-                DispatchQueue.main.async {
-                    self?.scannerStatus = "Scanner: camera permission denied"
-                }
-            }
+            onPermissionDenied: {}
         )
         self.cameraProvider = CameraScanProvider(
             backends: [AVFoundationCameraBackend(session: cameraSession)]
