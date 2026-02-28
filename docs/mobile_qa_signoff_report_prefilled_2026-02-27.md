@@ -15,9 +15,9 @@
 - Notes: Implemented in scaffold project; still needs parity check when moved to final production app repo.
 
 ### iOS
-- App root wired to `ProductionHomeView`: PENDING (real app target file not in this workspace)
-- Production tabs/routes accessible: PENDING
-- Notes: Requires edits in real iOS app target file (typically `<AppName>App.swift`).
+- App root wired to `ProductionHomeView`: PASS (scaffold project)
+- Production tabs/routes accessible: PENDING (build blocked before runtime verification)
+- Notes: `mobile/ios/AssetraApp.swift` and `mobile/ios_app/AssetraIOSApp.xcodeproj` created; runtime verification pending.
 
 ## Step 2: Dependencies + debug build
 
@@ -29,10 +29,10 @@
 
 ### iOS
 - Framework integration verified: PARTIAL
-- Simulator debug build: PENDING
+- Simulator debug build: FAIL (environment blocker)
 - Device debug build: PENDING
 - Launch check: PENDING
-- Notes: Zebra iOS SDK package is present in workspace; real target link/embed still required.
+- Notes: `xcodebuild` blocked because active developer directory is `/Library/Developer/CommandLineTools`; switch to full Xcode with `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`.
 
 ## Step 3: Device smoke tests
 
@@ -68,7 +68,7 @@
 
 | ID | Platform | Severity | Summary | Owner | ETA | Status |
 |----|----------|----------|---------|-------|-----|--------|
-| R-001 | Android+iOS | High | Entrypoint wiring pending in final production app targets (Android scaffold complete, iOS pending) | TBD | TBD | Open |
+| R-001 | Android+iOS | High | Entrypoint wiring pending in final production app targets (both scaffolded; final app repos still pending parity) | TBD | TBD | Open |
 | R-002 | Android+iOS | High | Device E2E validation not completed on production hardware | TBD | TBD | Open |
 | R-003 | Android+iOS | Medium | Release artifact validation not yet executed | TBD | TBD | Open |
 

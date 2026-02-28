@@ -8,7 +8,7 @@ Use this tracker while performing the first real app-target execution pass.
 - Build engineer: GitHub Copilot
 - QA engineer:
 - Android repo/branch: `/Users/Assetra/mobile/android_app` on `main`
-- iOS repo/branch:
+- iOS repo/branch: `/Users/Assetra/mobile/ios_app` on `main`
 
 ## Pass workflow
 
@@ -31,14 +31,15 @@ Use this tracker while performing the first real app-target execution pass.
 | ID | Step | Platform | Area | Severity | Repro steps | Expected | Actual | Owner | ETA | Status |
 |----|------|----------|------|----------|-------------|----------|--------|-------|-----|--------|
 | I-001 | 1 | Android | Entrypoint wiring | High | Apply launcher update in manifest and run app | App launches into production home | Implemented in scaffold manifest (`ProductionHomeComposeActivity` launcher) | Copilot | Done | Closed |
-| I-002 | 1 | iOS | App root wiring | High | Set app root to `ProductionHomeView` and run | App opens production tabs | TBD | TBD | TBD | Open |
+| I-002 | 1 | iOS | App root wiring | High | Set app root to `ProductionHomeView` and run | App opens production tabs | Implemented in scaffold source (`mobile/ios/AssetraApp.swift`) and generated Xcode project | Copilot | Done | Closed |
 | I-003 | 2 | Android | Debug build setup | High | Run `:app:assembleDebug` | Debug artifact builds successfully | Fixed toolchain + manifest + dependency issues; build now successful in scaffold | Copilot | Done | Closed |
+| I-004 | 2 | iOS | Debug build setup | High | Run simulator build via `xcodebuild` | Debug simulator build completes | Blocked: active developer directory points to CommandLineTools; full Xcode not selected | TBD | TBD | Open |
 
 ## Verification checkpoints
 
 ### Step 1
 - [x] Android entrypoint validated (scaffold project)
-- [ ] iOS entrypoint validated
+- [x] iOS entrypoint validated (scaffold project)
 
 ### Step 2
 - [x] Android debug build PASS (scaffold project)
@@ -57,10 +58,10 @@ Use this tracker while performing the first real app-target execution pass.
 
 - Date:
 - Completed today:
-- Completed today: Android scaffold entrypoint wiring applied and `:app:assembleDebug` passed.
+- Completed today: Android scaffold debug build passed; iOS Xcode project scaffold generated.
 - New blockers:
-- New blockers: iOS build target/project still not present in this workspace.
+- New blockers: iOS `xcodebuild` blocked until full Xcode is selected (`xcode-select` currently points to CommandLineTools).
 - Risks:
-- Risks: Android scaffold is not yet the final production app repo.
+- Risks: Scaffold projects may differ from final production app repos.
 - Next actions:
-- Next actions: Create/import real iOS app target and execute step-2 simulator/device builds.
+- Next actions: Switch active developer directory to full Xcode and rerun iOS simulator/device debug builds.

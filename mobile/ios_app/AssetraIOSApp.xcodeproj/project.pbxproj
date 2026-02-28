@@ -1,0 +1,366 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0419D81257A409C1073B7351 /* ConflictAcknowledgement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7AA7C93397E0626C4F8EC5 /* ConflictAcknowledgement.swift */; };
+		055B418FAD321E0633D684C6 /* ScanProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6C2909526A13C288F4252B /* ScanProvider.swift */; };
+		0CAEEBBE6AA821AA9D8E3DE0 /* ExternalScannerSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3B85633AE45437182A6DFC /* ExternalScannerSession.swift */; };
+		0E7C1387153844A19797D61E /* AssetraAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42CD62DE48F7D6B53F162D0 /* AssetraAPI.swift */; };
+		1BD0784D7E08270721052728 /* JSONValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4011422E5C4CBA0ABD91739 /* JSONValue.swift */; };
+		3973262752751E57D5B25813 /* AssetraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EED1E8D04D33F58CB7DFCC8 /* AssetraApp.swift */; };
+		467B6C1C124A09A2B05BC8DF /* AVFoundationCameraSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D11DAFC42300AB0267DC9E /* AVFoundationCameraSession.swift */; };
+		4ECF5A1F09C6C7E84311DE55 /* RfidSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2D1DBFD57743E34FB2DEC0 /* RfidSession.swift */; };
+		55AAE1DE8638A8001A488E9D /* ConflictRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64DFC716D70F4A47CCFB8C1 /* ConflictRecord.swift */; };
+		5D7D933EE2C2D45DA4A050A4 /* OfflineSyncSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AD0A70CCE61547EFB870E6 /* OfflineSyncSample.swift */; };
+		6222BA63117E1F09C89A8D77 /* SampleStoreHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F7CBB5D4353C7445A4158B /* SampleStoreHolder.swift */; };
+		751511A36C976370EA93D5D6 /* SampleSyncView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64FB2439AF0AD63EE1010E2 /* SampleSyncView.swift */; };
+		7D03E659608E0F5A09F27519 /* ProductionHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF22841884DBEBB3E727D2D /* ProductionHomeView.swift */; };
+		A19D241AEAA343DFA96DA607 /* SampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79391C6F0A51EFA759AE333 /* SampleApp.swift */; };
+		B9F1D6F146E5A59D7E893B51 /* ProductionSyncStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463F1494E99E3B18BFC433F9 /* ProductionSyncStatusView.swift */; };
+		D3CDAF85901434C7FED49F7B /* AuthSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F3BC9066DA43B7C90165E8 /* AuthSample.swift */; };
+		E057EAA647DACA21B3CF8F45 /* ProductionScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ABB173F613336BCE278817 /* ProductionScanView.swift */; };
+		F3A5FC650354001123AE7669 /* ConflictResolutionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A3D5A69E8E625EC71415F0 /* ConflictResolutionView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		06A3D5A69E8E625EC71415F0 /* ConflictResolutionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConflictResolutionView.swift; sourceTree = "<group>"; };
+		2D2D1DBFD57743E34FB2DEC0 /* RfidSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RfidSession.swift; sourceTree = "<group>"; };
+		2DFDD6EA70B59747CCF88E7D /* AssetraIOSApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = AssetraIOSApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3DF22841884DBEBB3E727D2D /* ProductionHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductionHomeView.swift; sourceTree = "<group>"; };
+		463F1494E99E3B18BFC433F9 /* ProductionSyncStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductionSyncStatusView.swift; sourceTree = "<group>"; };
+		5D3B85633AE45437182A6DFC /* ExternalScannerSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalScannerSession.swift; sourceTree = "<group>"; };
+		5EED1E8D04D33F58CB7DFCC8 /* AssetraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetraApp.swift; sourceTree = "<group>"; };
+		77F3BC9066DA43B7C90165E8 /* AuthSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSample.swift; sourceTree = "<group>"; };
+		7D6C2909526A13C288F4252B /* ScanProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanProvider.swift; sourceTree = "<group>"; };
+		81ABB173F613336BCE278817 /* ProductionScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductionScanView.swift; sourceTree = "<group>"; };
+		99F7CBB5D4353C7445A4158B /* SampleStoreHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleStoreHolder.swift; sourceTree = "<group>"; };
+		9E7AA7C93397E0626C4F8EC5 /* ConflictAcknowledgement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConflictAcknowledgement.swift; sourceTree = "<group>"; };
+		A9AD0A70CCE61547EFB870E6 /* OfflineSyncSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineSyncSample.swift; sourceTree = "<group>"; };
+		B64DFC716D70F4A47CCFB8C1 /* ConflictRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConflictRecord.swift; sourceTree = "<group>"; };
+		B79391C6F0A51EFA759AE333 /* SampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleApp.swift; sourceTree = "<group>"; };
+		C0D11DAFC42300AB0267DC9E /* AVFoundationCameraSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationCameraSession.swift; sourceTree = "<group>"; };
+		C4011422E5C4CBA0ABD91739 /* JSONValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONValue.swift; sourceTree = "<group>"; };
+		C42CD62DE48F7D6B53F162D0 /* AssetraAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetraAPI.swift; sourceTree = "<group>"; };
+		D64FB2439AF0AD63EE1010E2 /* SampleSyncView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleSyncView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		37E044047B01FDE523389E3D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2DFDD6EA70B59747CCF88E7D /* AssetraIOSApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		48142564E10771D0BD272DF1 = {
+			isa = PBXGroup;
+			children = (
+				AA612DF7916E9929590B50F8 /* ios */,
+				37E044047B01FDE523389E3D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AA612DF7916E9929590B50F8 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				C42CD62DE48F7D6B53F162D0 /* AssetraAPI.swift */,
+				5EED1E8D04D33F58CB7DFCC8 /* AssetraApp.swift */,
+				77F3BC9066DA43B7C90165E8 /* AuthSample.swift */,
+				C0D11DAFC42300AB0267DC9E /* AVFoundationCameraSession.swift */,
+				9E7AA7C93397E0626C4F8EC5 /* ConflictAcknowledgement.swift */,
+				B64DFC716D70F4A47CCFB8C1 /* ConflictRecord.swift */,
+				06A3D5A69E8E625EC71415F0 /* ConflictResolutionView.swift */,
+				5D3B85633AE45437182A6DFC /* ExternalScannerSession.swift */,
+				C4011422E5C4CBA0ABD91739 /* JSONValue.swift */,
+				A9AD0A70CCE61547EFB870E6 /* OfflineSyncSample.swift */,
+				3DF22841884DBEBB3E727D2D /* ProductionHomeView.swift */,
+				81ABB173F613336BCE278817 /* ProductionScanView.swift */,
+				463F1494E99E3B18BFC433F9 /* ProductionSyncStatusView.swift */,
+				2D2D1DBFD57743E34FB2DEC0 /* RfidSession.swift */,
+				B79391C6F0A51EFA759AE333 /* SampleApp.swift */,
+				99F7CBB5D4353C7445A4158B /* SampleStoreHolder.swift */,
+				D64FB2439AF0AD63EE1010E2 /* SampleSyncView.swift */,
+				7D6C2909526A13C288F4252B /* ScanProvider.swift */,
+			);
+			name = ios;
+			path = ../ios;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		644F3504259C94C15B51947E /* AssetraIOSApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CEE2E912231E07B8C2FCAE17 /* Build configuration list for PBXNativeTarget "AssetraIOSApp" */;
+			buildPhases = (
+				23372CFD1E17E4723AFED7C1 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AssetraIOSApp;
+			packageProductDependencies = (
+			);
+			productName = AssetraIOSApp;
+			productReference = 2DFDD6EA70B59747CCF88E7D /* AssetraIOSApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7F81CD3561A260E2ACF65FDB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					644F3504259C94C15B51947E = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 5A1A9B1B58EA7DC60732B8F8 /* Build configuration list for PBXProject "AssetraIOSApp" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 48142564E10771D0BD272DF1;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				644F3504259C94C15B51947E /* AssetraIOSApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		23372CFD1E17E4723AFED7C1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				467B6C1C124A09A2B05BC8DF /* AVFoundationCameraSession.swift in Sources */,
+				0E7C1387153844A19797D61E /* AssetraAPI.swift in Sources */,
+				3973262752751E57D5B25813 /* AssetraApp.swift in Sources */,
+				D3CDAF85901434C7FED49F7B /* AuthSample.swift in Sources */,
+				0419D81257A409C1073B7351 /* ConflictAcknowledgement.swift in Sources */,
+				55AAE1DE8638A8001A488E9D /* ConflictRecord.swift in Sources */,
+				F3A5FC650354001123AE7669 /* ConflictResolutionView.swift in Sources */,
+				0CAEEBBE6AA821AA9D8E3DE0 /* ExternalScannerSession.swift in Sources */,
+				1BD0784D7E08270721052728 /* JSONValue.swift in Sources */,
+				5D7D933EE2C2D45DA4A050A4 /* OfflineSyncSample.swift in Sources */,
+				7D03E659608E0F5A09F27519 /* ProductionHomeView.swift in Sources */,
+				E057EAA647DACA21B3CF8F45 /* ProductionScanView.swift in Sources */,
+				B9F1D6F146E5A59D7E893B51 /* ProductionSyncStatusView.swift in Sources */,
+				4ECF5A1F09C6C7E84311DE55 /* RfidSession.swift in Sources */,
+				A19D241AEAA343DFA96DA607 /* SampleApp.swift in Sources */,
+				6222BA63117E1F09C89A8D77 /* SampleStoreHolder.swift in Sources */,
+				751511A36C976370EA93D5D6 /* SampleSyncView.swift in Sources */,
+				055B418FAD321E0633D684C6 /* ScanProvider.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2993667C79179A2B3C4E5A40 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.assetra.sample.iosapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		8971353942A0E35EEA91AF03 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = NO;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_NAME = AssetraIOSApp;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B7808BB38CB4B1093BF1AEBB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.assetra.sample.iosapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		D1D315FF4B0120E1A996C8D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = NO;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_NAME = AssetraIOSApp;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5A1A9B1B58EA7DC60732B8F8 /* Build configuration list for PBXProject "AssetraIOSApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2993667C79179A2B3C4E5A40 /* Debug */,
+				B7808BB38CB4B1093BF1AEBB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CEE2E912231E07B8C2FCAE17 /* Build configuration list for PBXNativeTarget "AssetraIOSApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8971353942A0E35EEA91AF03 /* Debug */,
+				D1D315FF4B0120E1A996C8D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7F81CD3561A260E2ACF65FDB /* Project object */;
+}
