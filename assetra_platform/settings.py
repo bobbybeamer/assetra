@@ -1,17 +1,29 @@
 import os
+import warnings
 from datetime import timedelta
 from pathlib import Path
 
 import sentry_sdk
+from django.core.exceptions import ImproperlyConfigured
+from corsheaders.defaults import default_headers
 from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk.integrations.celery import CeleryIntegration
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "assetra-dev-secret-key")
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "assetra-dev-secret-key-please-change-this-value-2026")
 DEBUG = os.getenv("DJANGO_DEBUG", "1") == "1"
 ALLOWED_HOSTS = [host for host in os.getenv("DJANGO_ALLOWED_HOSTS", "*").split(",") if host]
+
+if len(SECRET_KEY) < 32:
+    if DEBUG:
+        warnings.warn(
+            "DJANGO_SECRET_KEY is shorter than 32 characters; use a longer secret for safer JWT signing.",
+            RuntimeWarning,
+        )
+    else:
+        raise ImproperlyConfigured("DJANGO_SECRET_KEY must be at least 32 characters when DJANGO_DEBUG=0")
 
 # ============================================================================
 # SENTRY ERROR TRACKING
@@ -31,6 +43,7 @@ if SENTRY_DSN:
     )
 
 INSTALLED_APPS = [
+    "corsheaders",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -45,6 +58,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -163,6 +177,17 @@ CELERY_TASK_ALWAYS_EAGER = os.getenv("CELERY_TASK_ALWAYS_EAGER", "0") == "1"
 if CELERY_TASK_ALWAYS_EAGER:
     CELERY_BROKER_URL = "memory://"
     CELERY_RESULT_BACKEND = "cache+memory://"
+
+CORS_ALLOWED_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv(
+        "CORS_ALLOWED_ORIGINS",
+        "http://127.0.0.1:5173,http://localhost:5173",
+    ).split(",")
+    if origin.strip()
+]
+
+CORS_ALLOW_HEADERS = (*default_headers, "x-tenant-id")
 
 # ============================================================================
 # LOGGING & OBSERVABILITY

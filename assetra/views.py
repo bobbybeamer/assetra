@@ -18,6 +18,7 @@ from .models import (
     NoCodeFormDefinition,
     ScanEvent,
     Tenant,
+    TenantMembership,
     WebhookDelivery,
     WebhookEndpoint,
     WorkflowDefinition,
@@ -363,6 +364,31 @@ class LiveDataView(APIView):
         asset_data = AssetSerializer(Asset.objects.filter(tenant_id=tenant_id).order_by("-updated_at")[:100], many=True).data
         scan_data = ScanEventSerializer(ScanEvent.objects.filter(tenant_id=tenant_id).order_by("-created_at")[:100], many=True).data
         return Response({"assets": asset_data, "scan_events": scan_data}, status=status.HTTP_200_OK)
+
+
+class AuthContextView(APIView):
+    permission_classes = [TenantRBACPermission]
+
+    def get(self, request):
+        tenant_id = request.headers.get("X-Tenant-ID")
+        membership = TenantMembership.objects.filter(tenant_id=tenant_id, user=request.user).first()
+        if not membership:
+            return Response({"detail": "membership not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        can_write = membership.role in {
+            TenantMembership.Role.ADMIN,
+            TenantMembership.Role.OPERATOR,
+        }
+
+        return Response(
+            {
+                "username": request.user.get_username(),
+                "tenant_id": str(tenant_id),
+                "role": membership.role,
+                "can_write": can_write,
+            },
+            status=status.HTTP_200_OK,
+        )
 
 
 class WebhookInboundView(APIView):

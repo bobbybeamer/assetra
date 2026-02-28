@@ -18,6 +18,7 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
+python -c 'import secrets; print(secrets.token_urlsafe(48))'  # use output for DJANGO_SECRET_KEY
 python manage.py migrate
 python manage.py createsuperuser
 python manage.py runserver
@@ -112,6 +113,25 @@ python scripts/smoke_test.py --base-url http://127.0.0.1:8000 --username smoke_a
 ```
 
 The script validates: auth → asset create → scan create → sync → webhook create → inbound webhook → barcode validation → lookup.
+
+## Role User Seeding (Dev)
+
+To quickly provision standard non-admin users for UI and RBAC testing:
+
+```bash
+DB_ENGINE=sqlite CELERY_TASK_ALWAYS_EAGER=1 python manage.py seed_role_users --tenant-id 1
+```
+
+Seeded users:
+
+- `std_readonly` (role: `read_only`)
+- `std_operator` (role: `operator`)
+
+Default password is `StdUserPass123!`. Override with:
+
+```bash
+DB_ENGINE=sqlite CELERY_TASK_ALWAYS_EAGER=1 python manage.py seed_role_users --tenant-id 1 --password 'YourStrongPassword123!'
+```
 
 ## Postman Collection
 

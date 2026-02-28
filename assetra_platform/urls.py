@@ -5,6 +5,7 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from assetra.views import (
+    AuthContextView,
     AssetCategoryViewSet,
     AssetViewSet,
     BarcodeValidationView,
@@ -52,6 +53,7 @@ urlpatterns = [
     path("api/docs/redoc/", SpectacularRedocView.as_view(url_name="schema"), name="redoc"),
     path("api/v1/auth/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/v1/auth/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("api/v1/auth/context/", AuthContextView.as_view(), name="auth_context"),
     path("api/v1/sync/", SyncView.as_view(), name="sync"),
     path("api/v1/barcodes/validate/", BarcodeValidationView.as_view(), name="barcode-validate"),
     path("api/v1/lookups/assets/", LookupView.as_view(), name="asset-lookup"),
