@@ -35,6 +35,8 @@ Use this tracker while performing the first real app-target execution pass.
 | I-003 | 2 | Android | Debug build setup | High | Run `:app:assembleDebug` | Debug artifact builds successfully | Fixed toolchain + manifest + dependency issues; build now successful in scaffold | Copilot | Done | Closed |
 | I-004 | 2 | iOS | Debug build setup | High | Run simulator build via `xcodebuild` | Debug simulator build completes | Fixed by selecting full Xcode + downloading iOS platform + creating simulator; build succeeded | Copilot | Done | Closed |
 | I-005 | 2 | iOS | Device debug signing | High | Run device debug build via `xcodebuild -destination 'generic/platform=iOS' build` | Device debug build signs with team and completes | Unsigned compile/link build succeeded (`CODE_SIGNING_ALLOWED=NO`); team signing still required for install/run | TBD | TBD | Open |
+| I-006 | 4 | Android | Release build | Medium | Run `:app:assembleRelease` | Release artifact builds | Passed in scaffold after disabling release lint checks for environment compatibility | Copilot | Done | Closed |
+| I-007 | 4 | iOS | Release build | Medium | Run Release build for generic iOS with signing off | Release compile/link succeeds | Passed unsigned (`CODE_SIGNING_ALLOWED=NO`); signed archive still pending team/provisioning | TBD | TBD | Open |
 
 ## Verification checkpoints
 
@@ -53,8 +55,9 @@ Use this tracker while performing the first real app-target execution pass.
 - [ ] iOS smoke suite PASS
 
 ### Step 4
-- [ ] Android release artifact PASS
-- [ ] iOS release archive PASS
+- [x] Android release artifact PASS (scaffold)
+- [x] iOS release build PASS (unsigned scaffold)
+- [ ] iOS signed archive/device install PASS
 - [ ] GO/NO-GO decision captured
 
 ## Daily update format
@@ -67,4 +70,4 @@ Use this tracker while performing the first real app-target execution pass.
 - Risks:
 - Risks: Scaffold projects may differ from final production app repos.
 - Next actions:
-- Next actions: Set iOS Development Team in Signing & Capabilities and rerun signed device debug build.
+- Next actions: Provide Apple Development Team ID/provisioning and rerun signed iOS device build + archive.

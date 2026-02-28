@@ -22,6 +22,9 @@ Execution tracking artifacts:
 - `docs/mobile_qa_signoff_report_prefilled_2026-02-27.md`
 - `docs/mobile_first_execution_pass_issue_tracker.md`
 
+Deferred credentials/inputs note:
+- `docs/mobile_pending_inputs.md`
+
 ## Android build to-do
 
 1. Confirm project entry wiring

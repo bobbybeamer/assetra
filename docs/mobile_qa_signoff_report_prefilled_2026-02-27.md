@@ -79,6 +79,11 @@
 - Crash logs: Pending
 - Build artifacts: Pending
 
+## Pending inputs to provide later
+
+- Apple Development Team ID (for signed iOS device build and install)
+- Provisioning profile / signing identity selection for `AssetraIOSApp` target
+
 ## Final decision
 
 - Android readiness: NO-GO (pending real target wiring/build/tests)
