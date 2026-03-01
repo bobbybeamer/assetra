@@ -42,26 +42,32 @@ Assetra now runs as a multi-tenant operations platform with:
 
 ## 2) Current readiness status
 
+### Verification snapshot (2026-03-01)
+
+- `DB_ENGINE=sqlite CELERY_TASK_ALWAYS_EAGER=1 python manage.py check` ✅
+- `cd web && npm run build` ✅
+- `DB_ENGINE=sqlite CELERY_TASK_ALWAYS_EAGER=1 python scripts/smoke_test.py` ✅ (with backend running at `127.0.0.1:8000`)
+
 ### Backend
 
-- Healthy in local sqlite mode
-- `manage.py check` passes
-- API smoke path verified (auth, assets, sync)
+- Runs cleanly in local SQLite mode
+- Passes `manage.py check`
+- Verifies API smoke path (auth, assets, sync)
 
 ### Web
 
-- Production build passes (`npm run build`)
-- Role-aware UI is active using auth context endpoint
+- Passes production build (`npm run build`)
+- Uses role-aware UI via auth context endpoint
 
 ### Android
 
-- Debug and release build/smoke flows completed in this environment
-- Emulator launch and route checks were previously validated
+- Completes debug and release build/smoke flows in this environment
+- Validates emulator launch and route checks
 
 ### iOS
 
-- Simulator release build/launch previously validated
-- Full signed archive/device release is still dependent on Apple signing/team/profile setup
+- Validates simulator release build/launch
+- Requires Apple signing/team/profile setup for full signed archive/device release
 
 ---
 
@@ -74,21 +80,21 @@ Assetra now runs as a multi-tenant operations platform with:
 - `POST /api/v1/sync/`
 - `GET /health/`
 
-Role context implementation is in [assetra/views.py](assetra/views.py) and route in [assetra_platform/urls.py](assetra_platform/urls.py).
+Role context implementation is in [assetra/views.py](assetra/views.py), and the route is in [assetra_platform/urls.py](assetra_platform/urls.py).
 
 ---
 
 ## 4) Local setup (backend + web)
 
-## Prereqs
+### Prereqs
 
 - Python 3.13+ with venv
 - Node.js 20+
 - npm
 
-## Backend run (sqlite dev mode)
+### Backend runtime (SQLite dev mode)
 
-From repo root:
+Run from repo root:
 
 ```bash
 source .venv/bin/activate
@@ -96,13 +102,19 @@ DB_ENGINE=sqlite CELERY_TASK_ALWAYS_EAGER=1 python manage.py migrate
 DB_ENGINE=sqlite CELERY_TASK_ALWAYS_EAGER=1 python manage.py runserver 127.0.0.1:8000
 ```
 
-## Optional backend sanity check
+### Backend sanity checks (optional)
 
 ```bash
 DB_ENGINE=sqlite CELERY_TASK_ALWAYS_EAGER=1 python manage.py check
 ```
 
-## Seed role test users (idempotent)
+Smoke test (requires backend running):
+
+```bash
+DB_ENGINE=sqlite CELERY_TASK_ALWAYS_EAGER=1 python scripts/smoke_test.py
+```
+
+### Seed role test users (idempotent)
 
 ```bash
 DB_ENGINE=sqlite CELERY_TASK_ALWAYS_EAGER=1 python manage.py seed_role_users --tenant-id 1
@@ -115,9 +127,9 @@ Seeded users:
 - `std_readonly` / `StdUserPass123!`
 - `std_operator` / `StdUserPass123!`
 
-## Web app run
+### Web app runtime
 
-In another terminal:
+Run in another terminal:
 
 ```bash
 cd web
@@ -127,7 +139,7 @@ npm run dev
 
 Default URL: `http://127.0.0.1:5173`
 
-Web app API client lives in [web/src/lib/api.ts](web/src/lib/api.ts).
+The web app API client is in [web/src/lib/api.ts](web/src/lib/api.ts).
 
 ---
 
@@ -150,7 +162,7 @@ Relevant files:
 
 ## 6) End-to-end web test script
 
-## A. Admin/operator path
+### A. Admin/operator test path
 
 - Login with `smoke_admin` or `std_operator`
 - Confirm role/access shown in header/cards
@@ -160,7 +172,7 @@ Relevant files:
   - run bulk status update
   - run sync
 
-## B. Read-only path
+### B. Read-only test path
 
 - Login with `std_readonly`
 - Confirm role/access indicates read-only
@@ -173,19 +185,19 @@ Relevant files:
 
 ## 7) Android testing with backend (and web side-by-side)
 
-Detailed mobile checklist reference: [docs/MOBILE_TESTING.md](docs/MOBILE_TESTING.md)
+Reference the detailed mobile checklist: [docs/MOBILE_TESTING.md](docs/MOBILE_TESTING.md)
 
-## Android app prerequisites
+### Android app prerequisites
 
 - Android Studio
 - Emulator/device with camera support if testing camera provider
 
-## Connectivity rules
+### Android connectivity rules
 
 - Android emulator to host backend: usually `http://10.0.2.2:8000`
 - Physical Android device: `http://<your-computer-lan-ip>:8000`
 
-## Android flow
+### Android flow
 
 1. Start backend (`127.0.0.1:8000`)
 2. Run Android app from `mobile/android_app`
@@ -205,19 +217,19 @@ Android sync client path: [mobile/android/AssetraApi.kt](mobile/android/AssetraA
 
 ## 8) iOS testing with backend (and web side-by-side)
 
-Detailed mobile checklist reference: [docs/MOBILE_TESTING.md](docs/MOBILE_TESTING.md)
+Reference the detailed mobile checklist: [docs/MOBILE_TESTING.md](docs/MOBILE_TESTING.md)
 
-## iOS app prerequisites
+### iOS app prerequisites
 
 - Xcode 15+
 - iOS simulator or physical device
 
-## Connectivity rules
+### iOS connectivity rules
 
 - iOS simulator can generally use `http://127.0.0.1:8000`
 - Physical iOS device should use `http://<your-computer-lan-ip>:8000`
 
-## iOS flow
+### iOS flow
 
 1. Start backend (`127.0.0.1:8000`)
 2. Open iOS app/project and run sample/production test target
@@ -248,30 +260,30 @@ iOS sync client path: [mobile/ios/AssetraAPI.swift](mobile/ios/AssetraAPI.swift)
    - verify role behavior by re-login as `std_readonly`
 8. Confirm read-only account cannot mutate data (UI + API)
 
-This gives confidence that mobile + web all operate against the same backend/tenant model.
+This validates that mobile and web operate against the same backend/tenant model.
 
 ---
 
 ## 10) Troubleshooting
 
-## CORS / browser fetch errors
+### CORS and browser fetch errors
 
 - Confirm backend has `django-cors-headers` configured in [assetra_platform/settings.py](assetra_platform/settings.py)
 - Ensure allowed origins include your web dev origin
 - Ensure `X-Tenant-ID` is allowed in CORS headers
 
-## Auth works but writes fail
+### Auth success with write failures
 
 - Check role via `GET /api/v1/auth/context/`
 - `read_only` and `auditor` are expected to fail writes with `403`
 
-## Mobile cannot reach backend
+### Mobile-to-backend connectivity failures
 
 - Verify you are not using `127.0.0.1` from Android emulator (use `10.0.2.2`)
 - For physical devices, use host LAN IP and same network
 - Confirm firewall allows inbound on backend port
 
-## iOS archive/release blocked
+### Blocked iOS archive/release
 
 - Requires Apple team/profile setup
 - Use existing recovery/checklist docs:
@@ -284,9 +296,9 @@ This gives confidence that mobile + web all operate against the same backend/ten
 
 For local/dev and internal QA, the stack is ready:
 
-- backend + web + role RBAC + mobile sync flows are integrated
-- role-aware web UX is implemented and validated
-- Android path has been smoke-tested in this environment
-- iOS simulator path has been validated
+- Integrates backend + web app + role RBAC + mobile sync flows
+- Implements and validates role-aware web UX
+- Smoke-tests the Android path in this environment
+- Validates the iOS simulator path
 
 For full production release readiness, complete iOS signing/device release steps and any deployment hardening specific to your environment.
